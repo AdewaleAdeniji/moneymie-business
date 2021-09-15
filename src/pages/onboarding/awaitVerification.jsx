@@ -3,16 +3,11 @@ import { AppContainer } from '../../components/container';
 
 import { BreadCrumbs } from '../../components/breadcrumbs/breadcrumbs';
 import { InfoBox } from '../../components/InfoArea/Info';
-import { LargeButton, LargeButtonGrey } from '../../components/buttons/buttons';
-import { FormArea,FormField  } from '../../components/Form/form';
-import { Link } from 'react-router-dom';
+import { FormArea  } from '../../components/Form/form';
 
-export const AwaitVerify = (props) => {
+export const AwaitVerify = () => {
     const [errorText, setErrorText] = useState('');
     const [saved, setSavedOwner] = useState(true);
-    const handleRegister = (e) => {
-        props.history.push('/review');
-    } 
     return (
         <AppContainer>
             <BreadCrumbs page={3}/>

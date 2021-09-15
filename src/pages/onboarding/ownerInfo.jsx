@@ -5,7 +5,6 @@ import { BreadCrumbs } from '../../components/breadcrumbs/breadcrumbs';
 import { InfoBox } from '../../components/InfoArea/Info';
 import { LargeButton, LargeButtonGrey } from '../../components/buttons/buttons';
 import { FormArea,FormField  } from '../../components/Form/form';
-import { Link } from 'react-router-dom';
 
 export const OwnerInfo = (props) => {
     const [errorText, setErrorText] = useState('');
@@ -20,7 +19,7 @@ export const OwnerInfo = (props) => {
                 <FormArea show={true} position='align-left' title='Owner Information' showBackButton={true}>
 
                             <InfoBox show={true} align='align-left'>
-                             Please ensure to fill information of someone who owns > 20% of the company
+                             Please ensure to fill information of someone who owns &gt; 20% of the company
                             </InfoBox>
                             <div className="owner-info">
                                 <div className="title-tile">
