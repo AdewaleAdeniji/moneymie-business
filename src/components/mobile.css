@@ -1,0 +1,61 @@
+@media(max-width:900px) {
+    .logincontainer {
+        margin-left: 10%;
+        margin-right: 10%;
+    }
+    
+    .form-area {
+        width: 100%;
+        margin-top: 50px;
+        margin-left: 0;
+        padding: 12px;
+    }
+   
+    
+    .breadcrumb.inactive {
+        display: none;
+    }
+    
+
+    
+    .input-items-flex .input-item-flex {
+        margin-right: 10px;
+        width: 30px;
+        height: 30px;
+    }
+    
+    .owner-infos {
+        display: block;
+    }
+    
+    .owner.means .owner-sub {margin-top: 10px;margin-bottom: 10px;}
+    
+    .owner-image {
+        font-size: 12px;
+    }
+    
+    button.btn.btn-view {
+        font-size: 12px;
+    }
+    
+    .owner-info a {
+        margin-top: 10px;
+    }
+    
+    .owner-info {
+        /* margin-bottom: 20px; */
+    }
+    .current-bread {
+        display: flex;
+    }
+    
+    
+    
+    .breadcrumb.current-bread {
+        display: flex;
+    }
+    
+    .breadcrumb {
+        display: none;
+    }
+}

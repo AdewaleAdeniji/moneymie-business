@@ -1,0 +1,466 @@
+:root {
+    --moneymie-green: #22B94C;
+    --moneymie-blue: #CED9E8;
+    --container-width:500px;
+}
+.logincontainer {
+    /* margin:20%; */
+    margin-top: 56px;
+    margin-right: calc(100% - 85%);
+    margin-left: calc(100% - 85%);
+}
+.logincontainer .logoarea {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.bread-crumbs {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    margin-top: 24px;
+}
+
+.breadcrumb {
+    margin-right: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.label-crumb {
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 18px;
+/* identical to box height, or 129% */
+
+
+/* Money Purple/Purple 600 */
+    color: #3A3391;
+}
+
+.crumb {
+    width:24px;
+    height:24px;
+    border:1px solid #9B9EA9;
+    border-radius:50%;
+    display:flex;
+    justify-content: center;
+    align-items:center;
+    margin-right:8px;
+    cursor: pointer;
+}
+.crumb.active {
+    background:#22B94C;
+    color:#fff;
+    font-size:12px;
+    border:none;
+}
+.form-title {
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 30px;
+/* identical to box height, or 125% */
+
+
+/* Money Purple/Purple 800 */
+    color: #19145C;
+}
+
+.align-left {
+    text-align: left !important;
+    align-items: left !important;
+}
+.align-center {
+    text-align: center !important;
+    align-items: center  !important;
+}
+.align-right {
+    text-align: right !important;
+    align-items: right  !important;
+}
+
+.form-area {
+    margin-top: 40px;
+    border: 0.5px solid #CED9E8;
+    border-radius: 16px;
+    width: 624px;
+    margin-left: calc(100% - 85%);
+    padding: 25px;
+}
+.hidden {
+    display: none;
+}
+.infobox {
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 15px;
+    line-height: 22px;
+    /* or 137% */
+
+    text-align: center;
+
+    /* Money Grey/Grey 800 */
+
+    color: #282F45;
+    margin-top: 10px;
+}
+.form-fields .infobox {
+    margin-top: 25px;
+}
+.infobox a {
+    color: #3A3391;
+    cursor: pointer;
+}
+
+.form-fields {
+    margin-top: 25px;
+}
+.form-field {
+    margin-top: 25px;
+}
+.form-field input , .form-field select {
+    display: block;
+    width: 100%;
+    background: #FFFFFF;
+/* Money Grey/Grey 500 */
+    border: 0.5px solid #9B9EA9;
+    border-radius: 8px;
+    height: 40px;
+    margin-top: 8px;
+    padding: 9px;
+}
+.form-field input::-webkit-input-placeholder {
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 22px;
+    /* identical to box height, or 137% */
+
+
+    /* Money Grey/Grey 400 */
+
+    color: #CED9E8;
+}
+.form-field label {
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 18px;
+/* identical to box height, or 129% */
+
+
+/* Money Grey/Grey 900 */
+    color: #0D152E;
+}
+.btn {
+    background: #3A3391;
+    border-radius: 8px;
+    height: 40px;
+    padding: 9px;
+    font-family: DM Sans;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 22px;
+/* identical to box height, or 137% */
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.form-fields .btn {
+    margin-top: 40px;
+}
+
+.btn-large {
+    width: 100%;
+}
+.infobox.errorbox {
+    background: #B00010;
+    color: #fff;
+    padding: 10px;
+    border-radius: 10px;
+}
+.infobox.successbox {
+    background:var(--moneymie-green);
+    color: #fff;
+    padding: 10px;
+    border-radius: 10px;
+}
+a.back-btn {
+    font-family: DM Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 18px;
+    /* identical to box height, or 129% */
+
+
+    /* Money Purple/Purple 600 */
+    color: #3A3391;
+    /* display: flex; */
+}
+
+.form-title.align-left {
+    margin-top: 15px;
+}
+.form-field .filearea {/* Money Grey/Grey 50 */
+    background: #FCFDFF;
+/* Money Grey/Grey 500 */
+    border: 0.5px dashed #9B9EA9;
+    border-radius: 16px;
+    height: 161px;
+    display: flex;
+    align-items: center;
+    margin-top:10px;
+    justify-content: center;
+}
+.file-inside {
+    text-align: center;
+}
+.breadcrumb a {
+    display: flex;
+    width: fit-content;
+}
+.file-desc {
+    font-family: DM Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 18px;
+/* or 129% */
+    text-align: center;
+
+/* Money Grey/Grey 600 */
+    color: #6B6F7D;
+}
+
+i.fa.fa-camera {
+    color:  #9B9EA9;
+    width: 42px;
+    height: 35px;
+    font-size: 34px;
+    margin-bottom: 12px;
+}
+.owner-info {
+    background: #FCFDFF;
+/* Money Grey/Grey 500 */
+    border: 1px dashed #9B9EA9;
+    box-sizing: border-box;
+    border-radius: 16px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding: 24px;
+}
+
+.title-tile {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+
+.owner-title {
+    font-family: DM Sans;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 22px;
+/* identical to box height, or 137% */
+
+
+/* Money Grey/Grey 900 */
+    color: #0D152E;
+}
+
+button.i-cancel {
+    background: #3A3391;
+    border-radius: 16px;
+    width: 25px;
+    height: 25px;
+    color: #fff;
+}
+
+.owner-infos {
+    display: flex;
+    justify-content: space-between;
+}
+
+.owner:last-child {margin-right: 20%;}
+
+.owner {
+    margin-top: 16px;
+}
+.owner-sub {
+    display: flex;
+    margin-top: 5px;
+}
+
+.owner-image {
+    background: #FFFFFF;
+/* Money Grey/Grey 500 */
+    border: 1px dashed #9B9EA9;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 32px;
+    width: 136px;
+}
+
+.owner-info a {
+    font-family: DM Sans;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 18px;
+/* identical to box height, or 129% */
+
+
+/* Money Purple/Purple 600 */
+    color: #3A3391;
+}
+
+.owner-info a i {
+    color: #fff;
+    /* background: #3A3391;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    text-align: center;
+    display: flex;
+    justify-content: center; */
+}
+.owner.means {
+    margin-right: 2%;
+}
+
+.owner-sup {
+    font-family: DM Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 16px;
+/* identical to box height, or 133% */
+
+
+/* Money Grey/Grey 600 */
+    color: #6B6F7D;
+}
+
+.owner-sub {}
+
+button.btn.btn-view {
+    background: #150F2E;
+    border-radius: 32px;
+    font-family: DM Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 15px;
+/* identical to box height, or 129% */
+    text-align: center;
+    color: #FFFFFF;
+    width: 57px;
+    height: 32px;
+    margin-left: 16px;
+}
+a button.i-cancel {
+    margin-left: 6px;
+    height: 16px;
+    width: 16px;
+    font-size: 13px;
+}
+.edit-info {
+    margin-bottom: 32px;
+}
+h4.review-title {
+    margin-top: 32px;
+    font-family: DM Sans;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 28px;
+/* identical to box height, or 140% */
+
+
+/* Money Purple/Purple 800 */
+    color: #19145C;
+}
+
+.label {
+    display: flex;
+    background: #EEFCF2;
+    border-radius: 32px;
+    font-family: DM Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 18px;
+/* identical to box height, or 129% */
+    text-align: center;
+
+/* Money Green/Green 500 */
+    color: #22B94C;
+    justify-content: center;
+    align-items: center;
+    width: 90px;
+    height: 25px;
+}
+
+.label .active.crumb {width: 16px;height: 16px;font-size: 10px;}
+
+.btn-grey {
+    border: 0.5px solid #CED9E8;
+    border-radius: 8px;
+    background: transparent;
+    color: #000;
+}
+img.align-center.await-img {
+    margin: 0 auto;
+}
+.text-sub {
+    text-align: right;
+    margin-top: 8px;
+    font-family: DM Sans;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 18px;
+/* identical to box height, or 129% */
+    text-align: right;
+
+/* Money Purple/Purple 600 */
+    color: #3A3391;
+}
+.input-items-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 24px;
+}
+.input-items-flex .input-item-flex {
+    -moz-appearance: textfield;
+    text-align: center;
+    width: 40px;
+    height: 40px;
+    padding: 9px;
+    background: #FFFFFF;
+    border: 0.5px solid #9B9EA9;
+    border-radius: 8px;
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    margin-right: 24px;
+    transition: .6s;
+}
+.input-items-flex .input-item-flex:hover, .input-items-flex .input-item-flex:focus {
+    border: 0.5px solid var(--moneymie-blue);
+    border-radius: 8px;
+}
