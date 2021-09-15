@@ -25,7 +25,8 @@ function App() {
     <Provider store={store}>
       <ChakraProvider>
         <Router>
-          <Route exact path='/login' component={Login}/>
+          <Route exact path='/' component={Login}/>
+          <Route path='/login' component={Login}/>
           <Route path='/register' component={CreateAccount}/>
           <Route path='/confirm-email' component={ConfirmEmail}/>
           <Route path='/company-info' component={CompanyInfo}/>
