@@ -1,11 +1,14 @@
-import logo from './logo.svg';
+
 import './App.css';
 import { ChakraProvider } from "@chakra-ui/react";
 import { store } from './redux/store'
 import { Provider} from 'react-redux'
 import { Route, BrowserRouter as Router } from 'react-router-dom';
+
 import './components/components.css';
 import './components/mobile.css';
+import './pages/dashboard/dashboard.css';
+import './pages/transaction/transaction.css';
 
 import {Login} from './pages/onboarding/login';
 import { CreateAccount } from './pages/onboarding/Register';
@@ -17,8 +20,13 @@ import { AwaitVerify } from './pages/onboarding/awaitVerification';
 import { ForgotPassword } from './pages/onboarding/forgotPassword';
 import { EmailOTP } from './pages/onboarding/emailOtp';
 import { ResetPassword } from './pages/onboarding/newPassword';
+import Transactions from './pages/transaction/transactions';
+import Beneficiaries from './pages/beneficiary';
+import Beneficiary from './pages/beneficiary/beneficiary';
+//user dashboard
 
-function App() {
+import Dashboard from './pages/dashboard';
+function App(props) {
   //console.log(data);
   
   return (
@@ -36,6 +44,10 @@ function App() {
           <Route path="/forgot-password" component={ForgotPassword}/>
           <Route path='/email-code' component={EmailOTP}/>
           <Route path='/reset-password' component={ResetPassword}/>
+          <Route path="/user/dashboard" component={Dashboard}/>
+          <Route path="/user/transactions" component={Transactions}/>
+          <Route path="/user/beneficiaries" component={Beneficiaries}/>
+          <Route path="/user/beneficiary" component={Beneficiary}/>
         </Router>
       </ChakraProvider>
     </Provider>

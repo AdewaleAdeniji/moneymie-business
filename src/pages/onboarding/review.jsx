@@ -3,14 +3,13 @@ import { AppContainer } from '../../components/container';
 
 import { BreadCrumbs } from '../../components/breadcrumbs/breadcrumbs';
 import { InfoBox } from '../../components/InfoArea/Info';
-import { LargeButton, LargeButtonGrey } from '../../components/buttons/buttons';
-import { FormArea,FormField  } from '../../components/Form/form';
-import { Link } from 'react-router-dom';
+import { LargeButton } from '../../components/buttons/buttons';
+import { FormArea  } from '../../components/Form/form';
 
 export const ReviewInfo = (props) => {
     const [errorText, setErrorText] = useState('');
     const [saved, setSavedOwner] = useState(true);
-    const handleRegister = (e) => {
+    const handleRegister = () => {
         props.history.push('/await-verify');
     } 
     return (
@@ -29,8 +28,7 @@ export const ReviewInfo = (props) => {
                                     <div className="owner-title">
                                         Owner Information
                                     </div>
-                                    <div className="owner-cancel">
-                                    </div>
+                                    
                                 </div>
                                 <div className="owner-infos">
                                     <div className="owner">
@@ -53,7 +51,7 @@ export const ReviewInfo = (props) => {
                                 </div>
                             
                                    
-                                </div>
+                            </div>
                     
 
                             <h4 className="review-title">Company Information</h4>

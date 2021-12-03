@@ -75,7 +75,7 @@ export const OwnerInfo = (props) => {
                                         </div>
                                     </div>
                                 </div>
-                                    <a href="#">Edit this Information 
+                                        <a href="#">Edit this Information 
                                         <button className="i-cancel">
                                             <i className="fa fa-angle-right"></i>
                                         </button>

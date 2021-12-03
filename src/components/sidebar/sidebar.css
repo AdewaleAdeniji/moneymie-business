@@ -1,0 +1,145 @@
+:root {
+    --moneymie-green: #22B94C;
+    --moneymie-blue: #3A3391;
+    --container-width:500px;
+}
+.app-container {
+    width: 100%;
+    display: flex;
+    background: #ffffff;
+}
+
+.app-container .sidebar {
+    width: 260px;
+    height: 100vh;
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    background: #FCFDFF;
+    border-right: 1px solid #CED9E8;
+    /* padding: 8px; */
+}
+
+.sidebar-header {
+    margin-top: 8p;
+    margin-top: 8px;
+    padding-left: 16px;
+}
+
+.sidebar-header img {
+    width: 132px;
+    height: 26px;
+    margin-top: 11px;
+}
+
+.sidebar-footer {
+    position: absolute;
+    bottom: 15%;
+    margin-left: 16px;
+}
+
+.sidebar-footer a {
+    font-family: DM Sans;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 18px;
+/* identical to box height, or 129% */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+/* Money Purple/Purple 600 */
+    color: #3A3391;
+}
+i.fa.fa-sign-out {
+    font-size: 24px;
+    margin-right: 7px;
+}
+.sidebar-content {
+    margin-top: 24px;
+}
+
+.sidebar-links ul li a {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-left: 17px;
+    font-family: DM Sans;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 18px;
+/* identical to box height, or 129% */
+
+
+/* Money Grey/Grey 600 */
+    color: #6B6F7D;
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    width: 100%;
+    transition: .5s;
+}
+.sidebar-links ul li a img {
+    margin-right: 16px;
+    width: 24px;
+    height: 24px;
+}
+.sidebar-links ul li a i {
+    margin-right: 16px;
+    font-size: 24px;
+}
+
+.sidebar-links ul li.active a {
+    color: #3A3391;
+}
+.sidebar-links ul li a:hover {
+    background: var(--moneymie-blue);
+    color:#ffffff;
+}
+.profile-body .owner-infos {
+    display: block;
+}
+
+.sidebar-profile {
+    margin: 16px;
+    background: #FFFFFF;
+/* Money Grey/Grey 400 */
+    border: 1px dashed #CED9E8;
+    border-radius: 16px;
+    padding-top: 14px;
+    /* padding-left: 16px; */
+    padding-bottom: 24px;
+    margin-top: 80px;
+}
+
+.profile-head {
+    font-family: DM Sans;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 22px;
+/* identical to box height, or 137% */
+
+
+/* Money Grey/Grey 900 */
+    background: #FFFFFF;
+/* Money Grey/Grey 400 */
+    border-bottom: 1px dashed #CED9E8;
+    color: #0D152E;
+    text-align: center;
+    padding-bottom: 14px;
+}
+
+.profile-body {
+    padding-left: 16px;
+}
+
+.profile-body .owner-sub {
+    font-family: DM Sans;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 18px;
+}

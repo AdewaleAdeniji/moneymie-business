@@ -1,18 +1,25 @@
-import React,{useState} from 'react';
+import React,{useEffect, useState} from 'react';
 import { AppContainer } from '../../components/container';
 
-import { BreadCrumbs } from '../../components/breadcrumbs/breadcrumbs';
 import { InfoBox } from '../../components/InfoArea/Info';
 import { LargeButton } from '../../components/buttons/buttons';
 import { FormArea,FormField  } from '../../components/Form/form';
 import { Link } from 'react-router-dom';
 import validator from 'validator';
+import { getLoggedInUser } from '../../components/auth';
 export const Login = (props) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(false);
     const [errorText, setErrorText] = useState('');
-    const handleClick = (props) => {
+    useEffect(()=>{
+        const user = getLoggedInUser();
+        //const loggedin =  user ? (typeof user == 'object' ? user : JSON.parse(user)) : null;
+        if(user){
+            props.history.push({pathname:'/user/dashboard',user:user});
+        }
+    },[props])
+    const handleClick = () => {
         try {
             if(!validator.isEmail(email)){
                 throw 'Invalid Email Address'  
@@ -24,6 +31,7 @@ export const Login = (props) => {
                 throw 'Password should contain at least an alphanumeric chraracter';
             }
             else {
+                props.history.push('/user/dashboard');
                 setError(false);
                 setErrorText('');
             }

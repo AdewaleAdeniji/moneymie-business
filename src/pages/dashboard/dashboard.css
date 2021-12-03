@@ -1,0 +1,156 @@
+.welcome-message {
+    font-family: DM Sans;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 32px;
+    line-height: 39px;
+/* identical to box height, or 122% */
+    letter-spacing: -0.02em;
+
+/* Money Purple/Purple 900 */
+    color: #150F2E;
+    margin-top: 48px;
+}
+.app-box {
+    padding-left: 32px;
+    margin-left: 260px;
+}
+.balance-card {
+    width: 430px;
+    height: 166px;
+    border-radius: 16px;
+    margin-right: 32px;
+}
+@media(max-width:1200px) {
+    .app-box{
+        padding-left: 20px;
+    }
+    .balance-card {
+        width: 350px;
+    }
+    .transactions-box {
+        width: calc(100vw - 350px) !important;
+    }
+}
+
+.user-balances {
+    margin-top: 24px;
+}
+.user-balances {
+    margin-top: 24px;
+    display: flex;
+}
+
+.wallet-balance {
+    padding-top: 40px;
+    padding-left: 32px;
+}
+
+.balance-title {
+    font-family: DM Sans;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 22px;
+/* identical to box height, or 137% */
+
+
+/* Money Purple/Purple 100 */
+    color: #F2F0FA;
+    text-transform: uppercase;
+}
+
+.balance {
+    font-family: DM Sans;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 44px;
+    line-height: 56px;
+/* identical to box height, or 127% */
+    letter-spacing: -0.02em;
+
+/* Money Purple/Purple 100 */
+    color: #F2F0FA;
+}
+
+.balance span {
+    font-size: 32px;
+    line-height: 39px;
+/* or 122% */
+    letter-spacing: -0.02em;
+
+/* Money Purple/Purple 100 */
+    color: #F2F0FA;
+}
+.action-card {
+    border: 0.5px solid #CED9E8;
+    border-radius: 16px;
+}
+
+.action-title {
+    background: #FCFDFF;
+/* Money Grey/Grey 400 */
+    border-bottom: 0.5px solid #CED9E8;
+    border-radius: 16px 16px 0px 0px;
+    padding: 11px;
+    padding-left: 16px;
+    font-family: DM Sans;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 18px;
+/* identical to box height, or 129% */
+
+
+/* Money Grey/Grey 900 */
+    color: #0D152E;
+}
+
+.action-body {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 24px;
+    font-family: DM Sans;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 22px;
+/* identical to box height, or 137% */
+
+
+/* Money Purple/Purple 600 */
+    color: #3A3391;
+}
+
+button.add-fund {
+    width: 48px;
+    height: 48px;
+    background: #EFFAF9;
+    border-radius: 18px;
+    display: block;
+    margin-bottom: 8px;
+    font-size: 28px;
+    color: #1C5E59;
+    text-align: center;
+    margin: 0 auto;
+    margin-bottom: 8px;
+}
+
+.action {
+    display: block;
+    text-align: center;
+    width: 90px;
+}
+
+button.send-money {
+    width: 48px;
+    height: 48px;
+    display: block;
+    background: #FFEBF7;
+    border-radius: 12px;
+    margin-bottom: 8px;
+    font-size: 25px;
+    color:  #B8006E;
+    margin: 0 auto;
+    margin-bottom: 8px;
+}

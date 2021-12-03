@@ -4,11 +4,11 @@ export const BreadCrumb = (props)  => {
     const {active, label , path, showpath,current} = props;
     
     const Bread = ({active,label,current}) => {
-        console.log(current);
+
         return (
             <>
-            <div className={`${active=='error' ? 'crumb error' : active ? 'active crumb' : 'inactive crumb'} ${current ? 'current-bread' : ''}`}>
-                    <i className={active=='fa fa-exclamation-mark' ? '!' : active ? 'fa fa-check' : ''}></i>
+            <div className={`${active==='error' ? 'crumb error' : active ? 'active crumb' : 'inactive crumb'} ${current ? 'current-bread' : ''}`}>
+                    <i className={active==='fa fa-exclamation-mark' ? '!' : active ? 'fa fa-check' : ''}></i>
                 </div>
                 <div className="label-crumb">
                     {label}
