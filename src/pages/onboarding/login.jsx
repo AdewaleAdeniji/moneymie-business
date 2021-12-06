@@ -1,50 +1,77 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Formik, Form } from 'formik';
+import axios from 'axios';
+import FormControl from '../../components/Form/FormControl';
 import { AppContainer } from '../../components/container';
-
-import { BreadCrumbs } from '../../components/breadcrumbs/breadcrumbs';
 import { InfoBox } from '../../components/InfoArea/Info';
 import { LargeButton } from '../../components/buttons/buttons';
-import { FormArea, FormField } from '../../components/Form/form';
+import { FormArea } from '../../components/Form/form';
 import { Link } from 'react-router-dom';
-import validator from 'validator';
+import { validateLogin } from '../../validations/onboarding/login';
+import { showToast } from '../../utils/toast';
+import config from '../../config'
+
+
+const initialValues = {
+    email: "",
+    password: ""
+}
+
+
 export const Login = (props) => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [error, setError] = useState(false);
-    const [errorText, setErrorText] = useState('');
-    const handleClick = (props) => {
+
+    const handleLogIn = async (values, onSubmitProps) => {
         try {
-            if (!validator.isEmail(email)) {
-                throw 'Invalid Email Address'
-            }
-            else if (password.length < 8) {
-                throw 'Password length must be 8 characters or more';
-            }
-            else if (!validator.isAlphanumeric(password)) {
-                throw 'Password should contain at least an alphanumeric chraracter';
-            }
-            else {
-                setError(false);
-                setErrorText('');
-            }
+            await axios.post(`${config.baseUrl}/user/login`, values)
         }
-        catch (err) {
-            //console.log('yush');
-            setError(true);
-            setErrorText(err);
+        catch (e) {
+            showToast("error", e.response.data.message)
+        }
+        finally {
+            onSubmitProps.setSubmitting(false)
         }
     }
-    const handleEmail = (e) => {
-        setEmail(e.target.value);
-    }
-    const handlePassword = (e) => {
-        setPassword(e.target.value);
-    }
+
     return (
         <AppContainer>
-
             <FormArea show={true} title='Login'>
-                <div className="form-fields">
+                <Formik
+                    initialValues={initialValues}
+                    validationSchema={validateLogin}
+                    onSubmit={handleLogIn}
+                >
+                    {(formik) => (
+                        <Form>
+
+                            <div className="form-fields">
+                                <FormControl
+                                    control="input"
+                                    type="email"
+                                    name="email"
+                                    label="Work email address"
+                                    placeholder="Email Address"
+                                />
+
+                                <FormControl
+                                    control="input"
+                                    type="password"
+                                    name="password"
+                                    label="Password"
+                                    placeholder="Password"
+                                />
+                                <LargeButton type="submit" disabled={formik.isSubmitting}>
+                                    {formik.isSubmitting ? 'Submitting' : 'Continue'}
+                                </LargeButton>
+
+
+                                <InfoBox show={true}>
+                                    New here ? <Link to="/register">Create an account </Link>
+                                </InfoBox>
+                            </div>
+                        </Form>
+                    )}
+                </Formik>
+                {/* <div className="form-fields">
 
                     <FormField title='Work Email Address'>
                         <input type="email" className="input-field" placeholder="Work Email Address" value={email}
@@ -70,7 +97,7 @@ export const Login = (props) => {
                     <InfoBox show={true}>
                         New here ? <Link to="/register">Create an account </Link>
                     </InfoBox>
-                </div>
+                </div> */}
             </FormArea>
         </AppContainer>
     )

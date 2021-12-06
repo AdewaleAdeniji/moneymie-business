@@ -37,7 +37,7 @@ export const CompanyInfo = (props) => {
 
         }
         finally {
-
+            onSubmitProps.setSubmitting(false)
         }
     }
 

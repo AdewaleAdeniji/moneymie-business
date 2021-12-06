@@ -13,7 +13,7 @@ import FormControl from '../../components/Form/FormControl';
 import { validateRegister } from '../../validations/onboarding/register';
 import { saveEmail, savePassword } from '../../redux/user';
 import config from '../../config'
-
+import { showToast } from '../../utils/toast';
 
 
 const initialValues = {
@@ -37,7 +37,7 @@ export const CreateAccount = (props) => {
             history.push('/confirm-email')
         }
         catch (e) {
-            console.log(e)
+            showToast("error", e.response.data.message)
         }
         finally {
             onSubmitProps.setSubmitting(false)
