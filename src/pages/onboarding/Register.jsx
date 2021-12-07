@@ -1,45 +1,91 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Formik, Form } from 'formik';
+import axios from 'axios';
+import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux'
 import { AppContainer } from '../../components/container';
-
+import { Link } from 'react-router-dom';
 import { BreadCrumbs } from '../../components/breadcrumbs/breadcrumbs';
 import { InfoBox } from '../../components/InfoArea/Info';
 import { LargeButton } from '../../components/buttons/buttons';
-import { FormArea,FormField  } from '../../components/Form/form';
-import { Link } from 'react-router-dom';
+import { FormArea } from '../../components/Form/form';
+import FormControl from '../../components/Form/FormControl';
+import { validateRegister } from '../../validations/onboarding/register';
+import { saveEmail, savePassword } from '../../redux/user';
+import config from '../../config'
+import { showToast } from '../../utils/toast';
 
+
+const initialValues = {
+    email: "",
+    password: ""
+}
 export const CreateAccount = (props) => {
-    const [errorText, setErrorText] = useState('');
 
-    const handleRegister = (e) => {
-        props.history.push('/confirm-email');
-    } 
+    const history = useHistory()
+    const dispatch = useDispatch()
+
+    const handleRegister = async (values, onSubmitProps) => {
+
+        const { email, password } = values
+
+        const body = { email, otpType: "emailVerification" }
+        try {
+            await axios.post(`${config.baseUrl}/otp/email`, body)
+            dispatch(saveEmail(email))
+            dispatch(savePassword(password))
+            history.push('/confirm-email')
+        }
+        catch (e) {
+            showToast("error", e.response.data.message)
+        }
+        finally {
+            onSubmitProps.setSubmitting(false)
+        }
+    }
     return (
         <AppContainer>
-            <BreadCrumbs page={0}/>
-                <FormArea show={true} position='align-center' title='Create an account'>
-                    <div className="form-fields">
-                            
-                            <FormField title='Work Email Address'>
-                                <input type="email" className="input-field" placeholder="Work Email Address" required/>
-                            </FormField>
-                            
-                            <FormField title='Password'>
-                                 <input type="password" className="input-field" placeholder="Password" required/>
-                            </FormField>
-                            <InfoBox show={true} success={true} error={true}>
-                                 {errorText}
-                            </InfoBox>
-                            <LargeButton onClick={handleRegister}>
-                                Continue
-                            </LargeButton>
+            <BreadCrumbs page={0} />
+            <FormArea show={true} position='align-center' title='Create an account'>
+                <Formik
+                    initialValues={initialValues}
+                    validationSchema={validateRegister}
+                    onSubmit={handleRegister}
+                >
+                    {(formik) => (
+                        <Form>
 
-                            <InfoBox show={true}>
-                                 Already have an account? <Link to='/login'>Sign in</Link>
-                            </InfoBox>
-                    </div>
+                            <div className="form-fields">
+                                <FormControl
+                                    control="input"
+                                    type="email"
+                                    name="email"
+                                    label="Work email address"
+                                    placeholder="Work Email Address"
+                                />
+
+                                <FormControl
+                                    control="input"
+                                    type="password"
+                                    name="password"
+                                    label="Password"
+                                    placeholder="Password"
+                                />
+                                <LargeButton type="submit" disabled={formik.isSubmitting}>
+                                    {formik.isSubmitting ? 'Submitting' : 'Continue'}
+                                </LargeButton>
+
+                                <InfoBox show={true}>
+                                    Already have an account? <Link to='/login'>Sign in</Link>
+                                </InfoBox>
+                            </div>
+                        </Form>
+                    )}
+                </Formik>
+
             </FormArea>
-           
-            
+
+
         </AppContainer>
     )
 }
