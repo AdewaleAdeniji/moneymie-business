@@ -222,6 +222,13 @@ a.back-btn {
     align-items: center;
     margin-top:10px;
     justify-content: center;
+    cursor: pointer;
+}
+
+.form-field .filearea:hover {/* Money Grey/Grey 50 */
+    background: #eee;
+/* Money Grey/Grey 500 */
+  
 }
 .file-inside {
     text-align: center;
