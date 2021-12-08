@@ -10,8 +10,8 @@ import { Link } from 'react-router-dom';
 import { validateLogin } from '../../validations/onboarding/login';
 import { showToast } from '../../utils/toast';
 import config from '../../config'
-
-
+import { useDispatch } from 'react-redux';
+import { loginUser,logoutUser } from '../../redux/user';
 const initialValues = {
     email: "",
     password: ""
@@ -19,10 +19,14 @@ const initialValues = {
 
 
 export const Login = (props) => {
-
+    const dispatch = useDispatch();
     const handleLogIn = async (values, onSubmitProps) => {
         try {
-            await axios.post(`${config.baseUrl}/user/login`, values)
+            const login =  await axios.post(`${config.baseUrl}/user/login`, values)
+            localStorage.removeItem('user_meta');
+            await dispatch(logoutUser());
+            await dispatch(loginUser(JSON.stringify(login.data)));
+            props.history.push('/user/dashboard');
         }
         catch (e) {
             showToast("error", e.response.data.message)
@@ -31,7 +35,6 @@ export const Login = (props) => {
             onSubmitProps.setSubmitting(false)
         }
     }
-
     return (
         <AppContainer>
             <FormArea show={true} title='Login'>

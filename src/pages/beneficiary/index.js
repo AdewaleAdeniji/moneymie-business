@@ -1,45 +1,82 @@
-import React, { Component } from "react";
-import { loggedIn } from "../../components/auth";
-import { getUser } from "../../components/api/dashboard/api";
+import React, { useEffect, useState } from "react";
 import { Loader } from "../../components/loader";
 import { Container } from "../../components/container";
 import './beneficiary.css';
+import { Button } from "@chakra-ui/button";
+import {
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem
+} from '@chakra-ui/react';
+import { GetLoggedInUser } from "../../utils/user";
+import { beneficiaries } from "./data";
+import { showToast } from '../../utils/toast';
+import { useStatus } from "../../utils/user";
 import { Link } from "react-router-dom";
-import { Transaction } from "../transaction/transaction";
-
-export default class Beneficiaries extends Component {
-  constructor(props) {
-    super();
-    this.state = {
-      loggedin: false,
-      data: {},
-      loaderText: "",
-      showloader: true,
-    };
-  }
-  componentDidMount() {
-    document.title = 'Beneficiaries';
-    if (!loggedIn()) {
-      this.props.history.push("/login");
+const Beneficiaries = (props) => {
+  const [ showloader, setShowLoader] = useState(true);
+  const [loaderText, setLoaderText] = useState('');
+  const [pending, setPending] = useState(false);
+  const [user, setUser] = useState(GetLoggedInUser());
+  const [firstRun, setFirstRun] = useState(true);
+  const [beneficiarieslist, setBeneficiaries] = useState([{
+    "id": 1,
+    "contact_name": "bolu",
+    "address": "lagos",
+    "phone_number": "0906537371",
+    "payment_type": "wire transfer",
+    "account_number": "2119177552",
+    "further_credit": "next year",
+    "further_credit_address": "lagos",
+    "swift_code": "65464",
+    "bank_name": "sterling",
+    "bank_swift": "54322",
+    "bank_country": "Nigeria",
+    "company_id": 1,
+    "createdAt": "2021-12-02T17:02:45.000Z",
+    "updatedAt": "2021-12-02T17:02:45.000Z"
+}]);
+  useEffect(()=>{
+    if(firstRun){
+      getUser();
+      setFirstRun(false);
     }
-    // get user balances
-    this.getUserBalance();
+    document.title = 'Beneficiaries';
+  })
+  const getUser = async () => {
+    const {data} = typeof(user)=='string'?JSON.parse(user):user;
+    setPending(data.status==='PENDING');
+    
+    try {
+    const beneficiariesdata = await beneficiaries(data.company_id);
+    const {rows} = beneficiariesdata?.data?.data;
+    //setBeneficiaries(rows);
+    }
+    catch(e){
+      if(e?.response?.status===401){
+        props.history.push('/login');
+      }
+      showToast("error", 'Error Occured while fetching beneficiaries')
+    }
+    finally {
+      setShowLoader(false);
+    }
   }
-  getUserBalance() {
-    this.setState({ loaderText: "Fetching Profile..." });
-    getUser()
-      .then((response) => response.json())
-      .then((data) => {
-        this.setState({ loggedin: true, data: data, showloader: false });
-      })
-      .catch((err) => {});
-  }
-  render() {
+    const viewBeneficiary = (e) => {
+      const ben = e.target.getAttribute("beneficiary");
+      props.history.push("/user/beneficiary/45", { beneficiary:ben });
+    }
+    const addBen = () => {
+      props.history.push('/beneficiary/create');
+    }
     return (
       <Container page="dashboard">
-        <Loader show={this.state.showloader} text={this.state.loaderText} />
-        <div className="welcome-message"></div>
-        <div className="col-md-12 note">
+        <Loader show={showloader} text={loaderText} />
+        
+        {/* <div className="welcome-message">Hi {}</div> */}
+        
+        {pending&&<div className="col-md-12 note">
           <div className="light-toast">
             <div className="img-section">
               <img
@@ -57,127 +94,79 @@ export default class Beneficiaries extends Component {
               </h6>
             </div>
           </div>
-        </div>
+        </div>}
+
         <div className="col-md-12">
             <div className="col-title">
             Beneficiaries list
             </div>
-            <button className="add-ben">
+            <button className="add-ben" onClick={addBen}>
                 Add Beneficiaries
             </button>
         </div>
         
         <div className="beneficiary-list">
            
-            {/* <table className="ben-list">
-                <thead>
-                    <tr>
-                        <th>
-                            Type
-                        </th>
-                        <th>
-                            Beneficiary Name
-                        </th>
-                        <th>
-                            Account number
-                        </th>
-                        <th>
-                            Beneficiary Address
-                        </th>
-                        <th>
-                            Beneficiary Account Name
-                        </th>
-                        <th>
-                            Beneficiary Contact Name
-                        </th>
-                        <th>
-                            Beneficiary Contact Number
-                        </th>
-                        <th>
-                            Rec Bank Name
-                        </th>
-                        <th>
-                            Swift/BIC code
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Beneficiary Contact Number</td>
-                    <td>Beneficiary Contact Number</td>
-                    <td>Beneficiary Contact Number</td>
-                    <td>Beneficiary Contact Number</td>
-                    <td>Beneficiary Contact Number</td>
-                    <td>Beneficiary Contact Number</td>
-                    <td>Beneficiary Contact Number</td>
-                    <td>Beneficiary Contact Number</td>
-                    <td>Beneficiary Contact Number</td>
-                    <td>Beneficiary Contact Number</td>
-                  </tr>
-                </tbody>
-            </table>
-           */}
            <section>
           <div className="transactions-title">
             <div className="trx type">Type</div>
             <div className="trx">Beneficiary Name</div>
             <div className="trx">Beneficiary Address</div>
-            <div className="trx">Beneficiary Account Number</div>
             <div className="trx">Beneficiary Contact Number</div>
-            <div className="trx">Rec Bank Name</div>
-            <div className="trx">Rec Bank Name</div>
-            <div className="trx">Swift/BIC Code</div>
             <div className="trx">
             </div>
           </div>
           
           <div className="transactions-body">
-
-          <div className="beneficiary">
-            <div className="trx type">Domestic</div>
-            <div className="trx">Adeniji Bengalee</div>
-            <div className="trx">No 3 wole crescent mag....</div>
-            <div className="trx">Bangalee Smith</div>
-            <div className="trx">09594848818</div>
-            <div className="trx">09594848818</div>
-            <div className="trx">Chase bank</div>
-            <div className="trx">1348585828</div>
-            <div className="trx">
-              <Link to="/user/beneficiary/45">View</Link>
-            </div>
-          </div>
-          <div className="beneficiary">
-            <div className="trx type">Domestic</div>
-            <div className="trx">Adeniji Bengalee</div>
-            <div className="trx">No 3 wole crescent mag....</div>
-            <div className="trx">Bangalee Smith</div>
-            <div className="trx">09594848818</div>
-            <div className="trx">09594848818</div>
-            <div className="trx">Chase bank</div>
-            <div className="trx">1348585828</div>
-            <div className="trx">
-              <Link to="/user/beneficiary/45">View</Link>
-            </div>
-          </div>
-          <div className="beneficiary">
-            <div className="trx type">Domestic</div>
-            <div className="trx">Adeniji Bengalee</div>
-            <div className="trx">No 3 wole crescent mag....</div>
-            <div className="trx">Bangalee Smith</div>
-            <div className="trx">09594848818</div>
-            <div className="trx">09594848818</div>
-            <div className="trx">Chase bank</div>
-            <div className="trx">1348585828</div>
-            <div className="trx">
-            <Link to="/user/beneficiary/45">View</Link>
-            </div>
-          </div>
+          {
+            beneficiarieslist.map((beneficiary)=>{
+                return (
+                  <div className="beneficiary">
+                    <div className="trx type">Domestic</div>
+                    <div className="trx">{beneficiary.contact_name}</div>
+                    <div className="trx">{beneficiary.address}</div>
+                    <div className="trx">{beneficiary.phone_number}</div>
+                    <div className="trx float-center">
+                    <Menu>
+                        <MenuButton as={Button} className="btn-more">
+                          <i className="fa fa-ellipsis-v"></i>
+                        </MenuButton>
+                        <MenuList>
+                          <MenuItem onClick={viewBeneficiary} beneficiary={JSON.stringify(beneficiary)}>View</MenuItem>
+                          <MenuItem>Send Money</MenuItem>
+                        </MenuList>
+                      </Menu>
+                      {/* <Link to="/user/beneficiary/45" className="float-center">View</Link> */}
+                    </div>
+                  </div>
           
+                )
+            })
+          }
+          {/* <div className="beneficiary">
+            <div className="trx type">Domestic</div>
+            <div className="trx">Adeniji Bengalee</div>
+            <div className="trx">No 3 wole crescent mag....</div>
+            <div className="trx">09594848818</div>
+            <div className="trx float-center">
+            <Menu>
+                <MenuButton as={Button} className="btn-more">
+                  <i className="fa fa-ellipsis-v"></i>
+                </MenuButton>
+                <MenuList>
+                  <MenuItem>View</MenuItem>
+                  <MenuItem>Send Money</MenuItem>
+                </MenuList>
+              </Menu>
+             <Link to="/user/beneficiary/45" className="float-center">View</Link>
+            </div>
+          </div>
+           */}
             
           </div>
            </section>
         </div>
       </Container>
     );
-  }
 }
+export default Beneficiaries;
