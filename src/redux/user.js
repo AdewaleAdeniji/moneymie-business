@@ -4,15 +4,17 @@ export const getToken = () => {
   return localStorage.getItem('user') ? localStorage.getItem('user').token : null;
 }
 
-const getEmail = () => {
-  return localStorage.getItem('email') ? localStorage.getItem('email') : ''
+const getUser = () => {
+  const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null
+  return user
 }
 
 const initialState = {
-  email: getEmail(),
+  email: "",
   loggedin: getToken() !== null,
   token: getToken(),
-  password: ''
+  password: '',
+  user: getUser()
 }
 export const userSlice = createSlice({
   name: 'user',
@@ -20,10 +22,15 @@ export const userSlice = createSlice({
   reducers: {
     saveEmail: (state, action) => {
       state.email = action.payload
-      localStorage.setItem('email', action.payload)
+      // localStorage.setItem('email', action.payload)
     },
     savePassword: (state, action) => {
       state.password = action.payload
+    },
+    saveUser: (state, action) => {
+      console.log(action.payload)
+      state.user = action.payload
+      localStorage.setItem('user', JSON.stringify(action.payload))
     }
   },
 })

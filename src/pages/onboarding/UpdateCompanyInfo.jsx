@@ -1,39 +1,53 @@
 import React, { useState, useRef } from 'react';
-import { Progress } from '@chakra-ui/react'
+import { Progress, CircularProgress } from '@chakra-ui/react'
 import axios from 'axios';
+
+import { Formik, Form } from 'formik';
 import { AppContainer } from '../../components/container';
 import { BreadCrumbs } from '../../components/breadcrumbs/breadcrumbs';
 import { InfoBox } from '../../components/InfoArea/Info';
 import { LargeButton } from '../../components/buttons/buttons';
 import { FormArea, FormField } from '../../components/Form/form';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import config from '../../config'
 import FormControl from '../../components/Form/FormControl';
+import { validateUpdateCompanyInfo } from '../../validations/onboarding/updateCompanyInfo';
+import { showToast } from '../../utils/toast';
 
 
 const initialValues = {
-    registrant_name: "",
-    company_name: "",
-    line_of_business: "",
-    phone_number: "",
-    company_website: ""
+    reg_no: "",
+    country_of_operations: "",
+    company_address: "",
+    ein: "",
 }
 
 
 export const UpdateCompanyInfo = (props) => {
-    const [errorText, setErrorText] = useState('');
     const fileInputRef = useRef()
     const [progress, setProgress] = useState(0);
     const [imageUrl, setImageUrl] = useState(null);
     const [isUploading, setIsUploading] = useState(false)
 
-    const handleRegister = (e) => {
-        props.history.push('/owner-info');
-    }
+    const history = useHistory();
 
+    const handleUpdateCompanyInfo = async (values, onSubmitProps) => {
+        if (!imageUrl) {
+            showToast("error", "Please upload your certificate of incorporation")
+            return
+        }
+        const body = { ...values, certificate_of_incorporation: imageUrl }
+        try {
+            const res = await axios.post(`${config.baseUrl}/user/login`, body)
+            history.push('/owner-info');
 
-    const updateCompanyInfo = (values, onSubmitProps) => {
-
+        }
+        catch (e) {
+            showToast("error", e.response.data.message)
+        }
+        finally {
+            onSubmitProps.setSubmitting(false)
+        }
     }
 
     const uploadImage = async (file) => {
@@ -74,115 +88,93 @@ export const UpdateCompanyInfo = (props) => {
     return (
         <AppContainer>
             <BreadCrumbs page={1} />
-
-
-            <InfoBox show={true} align='align-center'>
+            <div className={`form-title align-center`} style={{ marginTop: 40 }}>
                 Hello Company Name, Thanks for signing up,
                 Please complete your registration to start making paymemts
-            </InfoBox>
+            </div>
 
             <FormArea show={true} position='align-left' title='Company Information' showBackButton={true}>
                 <InfoBox show={true} align='align-left'>
                     Please complete your company’s information so we can know about your business?
                 </InfoBox>
 
-                <FormArea show={true} position='align-center' title='Create an account'>
-                    <Formik
-                        initialValues={initialValues}
-                        validationSchema={validateRegister}
-                        onSubmit={handleRegister}
-                    >
-                        {(formik) => (
-                            <Form>
 
-                                <div className="form-fields">
-                                    <FormControl
-                                        control="input"
-                                        type="text"
-                                        name="company_name"
-                                        label="Company Name"
-                                        placeholder="Company Name"
-                                    />
+                <Formik
+                    initialValues={initialValues}
+                    validationSchema={validateUpdateCompanyInfo}
+                    onSubmit={handleUpdateCompanyInfo}
+                >
+                    {(formik) => (
+                        <Form>
 
-                                    <FormControl
-                                        control="input"
-                                        type="password"
-                                        name="password"
-                                        label="Password"
-                                        placeholder="Password"
-                                    />
-                                    <LargeButton type="submit" disabled={formik.isSubmitting}>
-                                        {formik.isSubmitting ? 'Submitting' : 'Continue'}
-                                    </LargeButton>
+                            <div className="form-fields">
+                                <FormControl
+                                    control="input"
+                                    type="text"
+                                    name="reg_no"
+                                    label="Company Registration Number"
+                                    placeholder="Company Registration Number"
+                                />
 
-                                    <InfoBox show={true}>
-                                        Already have an account? <Link to='/login'>Sign in</Link>
-                                    </InfoBox>
-                                </div>
-                            </Form>
-                        )}
-                    </Formik>
+                                <FormControl
+                                    control="input"
+                                    type="text"
+                                    name="country_of_operations"
+                                    label="Country of Operations/Residence"
+                                    placeholder="Country of Operations/Residence"
+                                />
+                                <FormControl
+                                    control="textarea"
+                                    type="text"
+                                    name="company_address"
+                                    label="Company Address"
+                                    placeholder="Company Address"
+                                />
+                                <FormControl
+                                    control="input"
+                                    type="text"
+                                    name="ein"
+                                    label="US Employer Identification Number (EIN). {Insert N/A if not a US company}"
+                                    placeholder="US Employer Identification Number (EIN). {Insert N/A if not a US company}"
+                                />
 
-                </FormArea>
+                                <FormField title='Upload Document of Incorporation'>
+                                    <br />
+                                    <div className="filearea" onClick={() => fileInputRef.current?.click()}>
+                                        <div className="file-inside">
+                                            {isUploading && !imageUrl ?
+                                                <>
+                                                    <div className="file-desc">
+                                                        Uploading
+                                                    </div>
+                                                    <br />
+                                                    <Progress hasStripe value={progress} colorScheme='green' />
+                                                </> :
+                                                <>
+                                                    <i className="fa fa-camera"></i>
+                                                    <div className="file-desc">
+                                                        Upload Document of Incorporation
+                                                    </div>
 
-                <div className="form-fields">
+                                                </>
+                                            }
 
-
-
-                    <FormField title='Business Name'>
-                        <input type="text" className="input-field" placeholder="Enter your Business Name" required />
-                    </FormField>
-
-                    <FormField title='Business Address'>
-                        <input type="text" className="input-field" placeholder="Enter your Business Address" required />
-                    </FormField>
-                    <FormField title='Country of Incorporation'>
-                        <br />
-                        <select className="input-field" placeholder="Select Country">
-                            <option></option>
-                            <option value="Nigeria">Nigeria</option>
-                            <option value="Nigeria">Nigeria</option>
-                        </select>
-                    </FormField>
-
-                    <FormField title='Upload Document of Incorporation'>
-                        <br />
-                        <div className="filearea" onClick={() => fileInputRef.current?.click()}>
-                            <div className="file-inside">
-                                {isUploading && !imageUrl ?
-                                    <>
-                                        <div className="file-desc">
-                                            Uploading
+                                            {imageUrl && !isUploading &&
+                                                <div className="file-desc">
+                                                    {fileName(imageUrl)}
+                                                </div>
+                                            }
                                         </div>
-                                        <br />
-                                        <Progress hasStripe value={progress} colorScheme='green' />
-                                    </> :
-                                    <>
-                                        <i className="fa fa-camera"></i>
-                                        <div className="file-desc">
-                                            Upload Document of Incorporation
-                                        </div>
-
-                                    </>
-                                }
-
-                                {imageUrl && !isUploading &&
-                                    <div className="file-desc">
-                                        {fileName(imageUrl)}
                                     </div>
-                                }
+                                </FormField>
+
+                                <LargeButton type="submit" disabled={formik.isSubmitting}>
+                                    {formik.isSubmitting ? <CircularProgress size={6} isIndeterminate color='green.300' /> : 'Continue'}
+                                </LargeButton>
                             </div>
-                        </div>
-                    </FormField>
-                    <InfoBox show={true} success={true} error={true}>
-                        {errorText}
-                    </InfoBox>
-
-                    <LargeButton onClick={handleRegister}>
-                        Continue
-                    </LargeButton>
-
-                </div>
+                        </Form>
+                    )}
+                </Formik>
             </FormArea>
             <input
                 type="file"

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Formik, Form } from 'formik';
 import axios from 'axios';
+import { CircularProgress } from '@chakra-ui/react'
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux'
 import { AppContainer } from '../../components/container';
@@ -11,7 +12,7 @@ import { LargeButton } from '../../components/buttons/buttons';
 import { FormArea } from '../../components/Form/form';
 import FormControl from '../../components/Form/FormControl';
 import { validateRegister } from '../../validations/onboarding/register';
-import { saveEmail, savePassword } from '../../redux/user';
+import { saveEmail, saveUser } from '../../redux/user';
 import config from '../../config'
 import { showToast } from '../../utils/toast';
 
@@ -27,13 +28,12 @@ export const CreateAccount = (props) => {
 
     const handleRegister = async (values, onSubmitProps) => {
 
-        const { email, password } = values
+        const { email } = values;
 
-        const body = { email, otpType: "emailVerification" }
         try {
-            await axios.post(`${config.baseUrl}/otp/email`, body)
+            const res = await axios.post(`${config.baseUrl}/user/auth/signup`, values)
             dispatch(saveEmail(email))
-            dispatch(savePassword(password))
+            dispatch(saveUser(res.data.data))
             history.push('/confirm-email')
         }
         catch (e) {
@@ -72,7 +72,7 @@ export const CreateAccount = (props) => {
                                     placeholder="Password"
                                 />
                                 <LargeButton type="submit" disabled={formik.isSubmitting}>
-                                    {formik.isSubmitting ? 'Submitting' : 'Continue'}
+                                    {formik.isSubmitting ? <CircularProgress size={6} isIndeterminate color='green.300' /> : 'Continue'}
                                 </LargeButton>
 
                                 <InfoBox show={true}>
@@ -82,10 +82,7 @@ export const CreateAccount = (props) => {
                         </Form>
                     )}
                 </Formik>
-
             </FormArea>
-
-
         </AppContainer>
     )
 }

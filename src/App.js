@@ -17,6 +17,7 @@ import { ForgotPassword } from './pages/onboarding/forgotPassword';
 import { EmailOTP } from './pages/onboarding/emailOtp';
 import { ResetPassword } from './pages/onboarding/newPassword';
 import { VerifyEmail } from './pages/onboarding/verifyEmail';
+import { UpdateCompanyInfo } from './pages/onboarding/UpdateCompanyInfo';
 
 function App() {
   //console.log(data);
@@ -37,6 +38,7 @@ function App() {
           <Route path='/email-code' component={EmailOTP} />
           <Route path='/reset-password' component={ResetPassword} />
           <Route path='/verify-email/:token' component={VerifyEmail} />
+          <Route path='/update-company-info' component={UpdateCompanyInfo} />
         </Router>
       </ChakraProvider>
     </Provider>
