@@ -243,3 +243,17 @@ h4.ben-name {
     line-height: 18px;
     margin-top: 8px;
 }
+.form-fields.add-ben {
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
+.add-ben input.input-field {
+    width: 434px;
+    height: 40px;
+    margin-right: 48px;
+}
+.add-ben button {
+    width: 434px;
+}

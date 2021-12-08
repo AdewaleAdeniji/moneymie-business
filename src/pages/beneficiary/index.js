@@ -51,13 +51,15 @@ const Beneficiaries = (props) => {
     try {
     const beneficiariesdata = await beneficiaries(data.company_id);
     const {rows} = beneficiariesdata?.data?.data;
-    //setBeneficiaries(rows);
+    setBeneficiaries(rows);
     }
     catch(e){
       if(e?.response?.status===401){
         props.history.push('/login');
       }
+      else {
       showToast("error", 'Error Occured while fetching beneficiaries')
+      }
     }
     finally {
       setShowLoader(false);
@@ -143,26 +145,6 @@ const Beneficiaries = (props) => {
                 )
             })
           }
-          {/* <div className="beneficiary">
-            <div className="trx type">Domestic</div>
-            <div className="trx">Adeniji Bengalee</div>
-            <div className="trx">No 3 wole crescent mag....</div>
-            <div className="trx">09594848818</div>
-            <div className="trx float-center">
-            <Menu>
-                <MenuButton as={Button} className="btn-more">
-                  <i className="fa fa-ellipsis-v"></i>
-                </MenuButton>
-                <MenuList>
-                  <MenuItem>View</MenuItem>
-                  <MenuItem>Send Money</MenuItem>
-                </MenuList>
-              </Menu>
-             <Link to="/user/beneficiary/45" className="float-center">View</Link>
-            </div>
-          </div>
-           */}
-            
           </div>
            </section>
         </div>

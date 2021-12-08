@@ -4,7 +4,7 @@ import { getUser } from "../../components/api/dashboard/api";
 import { Loader } from "../../components/loader";
 import { Container } from "../../components/container";
 import './beneficiary.css';
-
+import Pay from "../pay";
 export default class Beneficiary extends Component {
   constructor(props) {
     super();
@@ -13,9 +13,11 @@ export default class Beneficiary extends Component {
       data: {},
       loaderText: "",
       showloader: false,
-      beneficiary:JSON.parse(props.location.state.beneficiary)
+      beneficiary:JSON.parse(props.location.state.beneficiary),
+      showPay:false
     };
     this.goBack = this.goBack.bind(this);
+    this.togglePay = this.togglePay.bind(this);
   }
   componentDidMount() {
     
@@ -32,9 +34,13 @@ export default class Beneficiary extends Component {
   goBack(){
       this.props.history.goBack();
   }
+  togglePay(){
+    this.setState({showPay:!this.state.showPay})
+  }
   render() {
     return (
       <Container page="beneficiary">
+          <Pay show={this.state.showPay} onClose={this.togglePay} beneficiary_name={this.state.beneficiary.contact_name}/>
         <Loader show={this.state.showloader} text={this.state.loaderText} />
         
         <div className="col-md-12 ben">
@@ -49,7 +55,7 @@ export default class Beneficiary extends Component {
                 <button>
                     Edit
                 </button>
-                <button className="pay">
+                <button className="pay" onClick={this.togglePay}>
                     Pay User
                 </button>
             </div>

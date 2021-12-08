@@ -1,18 +1,24 @@
 import React from 'react';
 import { Component } from 'react';
 import { Link } from 'react-router-dom';
+import user from '../../redux/user';
 import { links } from './links';
 import './sidebar.css';
-
 export default class SideBar extends Component {
     constructor(props){
         super();
+
+    }
+    componentDidMount(){
+        
+        console.log(user);
     }
     render(){
+        const user = JSON.parse(localStorage.getItem('user_meta'))
         return (
             <aside className="sidebar">
                 <div className="sidebar-header">
-                    <img src="../assets/logo.png" alt="App logo"/>
+                    <img src="%PUBLIC_URL%/assets/logo.png" alt="App logo"/>
                 </div>
                 <div className="sidebar-content">
                     <div className="sidebar-links">
@@ -46,17 +52,10 @@ export default class SideBar extends Component {
                                           EMAIL
                                         </div>
                                         <div className="owner-sub">
-                                            devferanmi@gmail.com
+                                            {user.data.email}
                                         </div>
                                     </div>
-                                    <div className="owner">
-                                        <div className="owner-sup">
-                                          EMAIL
-                                        </div>
-                                        <div className="owner-sub">
-                                            devferanmi@gmail.com
-                                        </div>
-                                    </div>
+                                    
                                 </div>
                             
                         </div>
