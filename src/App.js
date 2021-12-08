@@ -29,6 +29,10 @@ import { UpdateCompanyInfo } from './pages/onboarding/UpdateCompanyInfo';
 import Dashboard from './pages/dashboard';
 import ProtectedRoute from './routes/authProtected';
 import AddBeneficiary from './pages/beneficiary/addBen';
+import Logout from './pages/onboarding/logout';
+import { ToastContainer, toast } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
 function App(props) {
   //console.log(data);
 
@@ -48,8 +52,15 @@ function App(props) {
           <Route path='/email-code' component={EmailOTP} />
           <Route path='/reset-password' component={ResetPassword} />
           <Route path='/verify-email/:token' component={VerifyEmail} />
+          <Route path='/logout' component={Logout}/>
+          <ProtectedRoute path="/user/dashboard" component={Beneficiaries}/>
+          <ProtectedRoute path="/user/transactions" component={Transactions}/>
+          <ProtectedRoute path="/user/beneficiaries" component={Beneficiaries}/>
+          <ProtectedRoute path="/user/beneficiary/:id" component={Beneficiary}/>
+          <ProtectedRoute path="/beneficiary/create" component={AddBeneficiary}/>
           <Route path='/update-company-info' component={UpdateCompanyInfo} />
         </Router>
+        <ToastContainer />
       </ChakraProvider>
     </Provider>
   );
