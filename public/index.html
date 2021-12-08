@@ -42,5 +42,28 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    <!-- <script>
+      var shiftpressed = false;
+        document.addEventListener("keydown", function (e) {
+        var keyCode = e.keyCode ? e.keyCode : e.which;
+            
+            if (keyCode == 44) {
+                alert('Screenshot prevented on this app');
+            }
+            else if( keyCode == 16 ) {
+               shiftpressed = true;
+            }
+            else if (keyCode == 91 ) {
+              if(shiftpressed){
+                let c = confirm('Screenshot prevented on this app');
+                hidepage();
+                console.log(c);
+              }
+            } 
+        });
+        function hidepage(){
+          document.getElementById('root').style.display='none';
+        }
+    </script> -->
   </body>
 </html>

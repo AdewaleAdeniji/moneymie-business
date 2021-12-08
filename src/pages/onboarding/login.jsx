@@ -32,7 +32,9 @@ export const Login = (props) => {
             onSubmitProps.setSubmitting(false)
 
             const user = res.data.data
-            dispatch(saveUser(user))
+            localStorage.removeItem('user_meta');
+            await dispatch(logoutUser());
+            await dispatch(loginUser(JSON.stringify(user)));
             if (!user.email_verified) {
                 return history.push('/confirm-email')
             }
@@ -43,6 +45,8 @@ export const Login = (props) => {
                 return history.push('/await-verify')
             }
 
+            history.push('/user/dashboard')
+
 
         }
         catch (e) {
@@ -51,7 +55,6 @@ export const Login = (props) => {
         }
 
     }
-
     return (
         <AppContainer>
             <FormArea show={true} title='Login'>

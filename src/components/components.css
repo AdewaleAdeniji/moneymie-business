@@ -1,7 +1,8 @@
 :root {
     --moneymie-green: #22B94C;
-    --moneymie-blue: #CED9E8;
+    --moneymie-blue: #3A3391;
     --container-width:500px;
+    --moneymie-blue-bg: #533DB5;
 }
 .logincontainer {
     /* margin:20%; */
@@ -386,7 +387,6 @@ i.fa.fa-camera {
     color: #6B6F7D;
 }
 
-.owner-sub {}
 
 button.btn.btn-view {
     background: #150F2E;
@@ -495,4 +495,10 @@ img.align-center.await-img {
 .input-items-flex .input-item-flex:hover, .input-items-flex .input-item-flex:focus {
     border: 0.5px solid var(--moneymie-blue);
     border-radius: 8px;
+}
+.blue-bg {
+    background: var(--moneymie-blue-bg);
+}
+.green-bg {
+    background: var(--moneymie-green);
 }

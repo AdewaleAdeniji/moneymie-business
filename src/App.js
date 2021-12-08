@@ -3,8 +3,11 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { store } from './redux/store'
 import { Provider } from 'react-redux'
 import { Route, BrowserRouter as Router } from 'react-router-dom';
+
 import './components/components.css';
 import './components/mobile.css';
+import './pages/dashboard/dashboard.css';
+import './pages/transaction/transaction.css';
 
 import { Login } from './pages/onboarding/login';
 import { CreateAccount } from './pages/onboarding/Register';
@@ -16,10 +19,17 @@ import { AwaitVerify } from './pages/onboarding/awaitVerification';
 import { ForgotPassword } from './pages/onboarding/forgotPassword';
 import { EmailOTP } from './pages/onboarding/emailOtp';
 import { ResetPassword } from './pages/onboarding/newPassword';
+import Transactions from './pages/transaction/transactions';
+import Beneficiaries from './pages/beneficiary';
+import Beneficiary from './pages/beneficiary/beneficiary';
+//user dashboard
 import { VerifyEmail } from './pages/onboarding/verifyEmail';
 import { UpdateCompanyInfo } from './pages/onboarding/UpdateCompanyInfo';
 
-function App() {
+import Dashboard from './pages/dashboard';
+import ProtectedRoute from './routes/authProtected';
+import AddBeneficiary from './pages/beneficiary/addBen';
+function App(props) {
   //console.log(data);
 
   return (

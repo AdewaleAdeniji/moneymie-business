@@ -13,6 +13,7 @@ import config from '../../config'
 import FormControl from '../../components/Form/FormControl';
 import { validateAddCompanyInfo } from '../../validations/onboarding/addCompany';
 import { showToast } from '../../utils/toast';
+import { BreadCrumb } from '../../components/breadcrumb/breadcrumb';
 
 
 const initialValues = {
@@ -51,7 +52,7 @@ export const CompanyInfo = (props) => {
     return (
         <AppContainer>
             <BreadCrumbs page={1} />
-
+            <BreadCrumb label="Company Info"/>
             <FormArea show={true} position='align-left' title='Company Information' showBackButton={true}>
                 <InfoBox show={true} align='align-left'>
                     Please fill in your company’s information so we can know about your business?
