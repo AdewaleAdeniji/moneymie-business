@@ -12,7 +12,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { validateLogin } from '../../validations/onboarding/login';
 import { showToast } from '../../utils/toast';
 import config from '../../config'
-import { saveUser } from '../../redux/user';
+import { logoutUser, loginUser } from '../../redux/user';
 
 
 const initialValues = {

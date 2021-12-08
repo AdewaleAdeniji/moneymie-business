@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { AppContainer } from '../../components/container';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
@@ -6,6 +6,11 @@ import { BreadCrumbs } from '../../components/breadcrumbs/breadcrumbs';
 import { InfoBox } from '../../components/InfoArea/Info';
 import { LargeButton } from '../../components/buttons/buttons';
 import { FormArea } from '../../components/Form/form';
+import { useHistory } from 'react-router-dom';
+import { CircularProgress } from '@chakra-ui/react'
+
+import config from '../../config';
+import { showToast } from '../../utils/toast';
 
 export const ConfirmEmail = (props) => {
 
