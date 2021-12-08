@@ -6,16 +6,21 @@ export const getUser = () => {
 export const getToken = () => {
   return getUser()?.token || null;
 }
+
+// const getUser = () => {
+//   const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null
+//   return user
+// }
 const getEmail = () => {
   return localStorage.getItem('email') ? localStorage.getItem('email') : ''
 }
 
 const initialState = {
-  email: getEmail(),
+  email: "",
   loggedin: getToken() !== null,
   token: getToken(),
   password: '',
-  user:getUser(),
+  user: getUser(),
 }
 
 export const userSlice = createSlice({
@@ -24,10 +29,14 @@ export const userSlice = createSlice({
   reducers: {
     saveEmail: (state, action) => {
       state.email = action.payload
-      localStorage.setItem('email', action.payload)
+      // localStorage.setItem('email', action.payload)
     },
     savePassword: (state, action) => {
       state.password = action.payload
+    },
+    saveUser: (state, action) => {
+      state.user = action.payload
+      localStorage.setItem('user_meta', action.payload)
     },
     loginUser: (state, action) => {
       state.user = action.payload
@@ -43,6 +52,6 @@ export const userSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { loginUser,logoutUser, saveEmail, savePassword } = userSlice.actions
+export const { loginUser, logoutUser, saveEmail, savePassword, saveUser } = userSlice.actions
 
 export default userSlice.reducer

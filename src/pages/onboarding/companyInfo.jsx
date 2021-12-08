@@ -1,12 +1,14 @@
 import React from 'react';
 import axios from 'axios';
 import { Formik, Form } from 'formik';
+import { CircularProgress } from '@chakra-ui/react'
+import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { AppContainer } from '../../components/container';
 import { BreadCrumbs } from '../../components/breadcrumbs/breadcrumbs';
 import { InfoBox } from '../../components/InfoArea/Info';
 import { LargeButton } from '../../components/buttons/buttons';
 import { FormArea } from '../../components/Form/form';
-import { Link } from 'react-router-dom';
 import config from '../../config'
 import FormControl from '../../components/Form/FormControl';
 import { validateAddCompanyInfo } from '../../validations/onboarding/addCompany';
@@ -24,22 +26,26 @@ const initialValues = {
 
 
 export const CompanyInfo = (props) => {
+    const history = useHistory()
+
+    const user = useSelector(state => state.user.user)
 
     const addCompanyInfo = async (values, onSubmitProps) => {
 
-        const body = { ...values }
+        const body = { ...values, "user_id": user.id, }
 
         try {
-            const res = await axios.post(`${config.baseUrl}/otp/email`, body)
+            const res = await axios.post(`${config.baseUrl}/user/application/intent/new`, body)
+            showToast("success", res.data.message)
+            onSubmitProps.setSubmitting(false)
+            history.push('/await-verify')
 
         }
         catch (e) {
-            showToast("error", e.response.data.message)
-
-        }
-        finally {
             onSubmitProps.setSubmitting(false)
+            showToast("error", e.response.data.message)
         }
+
     }
 
 
@@ -102,7 +108,7 @@ export const CompanyInfo = (props) => {
                                     placeholder="Company website"
                                 />
                                 <LargeButton type="submit" disabled={formik.isSubmitting}>
-                                    {formik.isSubmitting ? 'Submitting' : 'Continue'}
+                                    {formik.isSubmitting ? <CircularProgress size={6} isIndeterminate color='green.300' /> : 'Continue'}
                                 </LargeButton>
                             </div>
                         </Form>

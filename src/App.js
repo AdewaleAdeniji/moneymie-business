@@ -24,6 +24,7 @@ import Beneficiaries from './pages/beneficiary';
 import Beneficiary from './pages/beneficiary/beneficiary';
 //user dashboard
 import { VerifyEmail } from './pages/onboarding/verifyEmail';
+import { UpdateCompanyInfo } from './pages/onboarding/UpdateCompanyInfo';
 
 import Dashboard from './pages/dashboard';
 import ProtectedRoute from './routes/authProtected';
@@ -47,14 +48,7 @@ function App(props) {
           <Route path='/email-code' component={EmailOTP} />
           <Route path='/reset-password' component={ResetPassword} />
           <Route path='/verify-email/:token' component={VerifyEmail} />
-
-          <ProtectedRoute path="/user/dashboard" component={Beneficiaries}/>
-          <ProtectedRoute path="/user/transactions" component={Transactions}/>
-          <ProtectedRoute path="/user/beneficiaries" component={Beneficiaries}/>
-          <ProtectedRoute path="/user/beneficiary/:id" component={Beneficiary}/>
-          <ProtectedRoute path="/beneficiary/create" component={AddBeneficiary}/>
-
-
+          <Route path='/update-company-info' component={UpdateCompanyInfo} />
         </Router>
       </ChakraProvider>
     </Provider>

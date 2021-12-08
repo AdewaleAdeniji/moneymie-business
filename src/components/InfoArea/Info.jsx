@@ -10,7 +10,6 @@ export const InfoBox = (props) => {
     }
     // console.log(props);
     const align = props.align ? props.align : '';
-
     return (
         props.children.length !== 0 ? <div className={`${showelem ? props.error ? 'infobox errorbox' : props.success ? 'infobox successbox' : 'infobox' : 'hidden'} ${align}`}>
             {props.children}
