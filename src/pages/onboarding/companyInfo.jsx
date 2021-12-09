@@ -1,69 +1,120 @@
-import React, { useState } from 'react';
+import React from 'react';
+import axios from 'axios';
+import { Formik, Form } from 'formik';
+import { CircularProgress } from '@chakra-ui/react'
+import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { AppContainer } from '../../components/container';
-
 import { BreadCrumbs } from '../../components/breadcrumbs/breadcrumbs';
 import { InfoBox } from '../../components/InfoArea/Info';
 import { LargeButton } from '../../components/buttons/buttons';
-import { FormArea,FormField  } from '../../components/Form/form';
-import { Link } from 'react-router-dom';
+import { FormArea } from '../../components/Form/form';
+import config from '../../config'
+import FormControl from '../../components/Form/FormControl';
+import { validateAddCompanyInfo } from '../../validations/onboarding/addCompany';
+import { showToast } from '../../utils/toast';
+import { BreadCrumb } from '../../components/breadcrumb/breadcrumb';
+
+
+const initialValues = {
+    registrant_name: "",
+    company_name: "",
+    line_of_business: "",
+    phone_number: "",
+    company_website: ""
+}
+
 
 export const CompanyInfo = (props) => {
-    const [errorText, setErrorText] = useState('');
+    const history = useHistory()
 
-    const handleRegister = (e) => {
-        props.history.push('/owner-info');
-    } 
+    const user = useSelector(state => state.user.user)
+
+    const addCompanyInfo = async (values, onSubmitProps) => {
+
+        const body = { ...values, "user_id": user.id, }
+
+        try {
+            const res = await axios.post(`${config.baseUrl}/user/application/intent/new`, body)
+            showToast("success", res.data.message)
+            onSubmitProps.setSubmitting(false)
+            history.push('/await-verify')
+
+        }
+        catch (e) {
+            onSubmitProps.setSubmitting(false)
+            showToast("error", e.response.data.message)
+        }
+
+    }
+
+
     return (
         <AppContainer>
-            <BreadCrumbs page={1}/>
-                            
-                <FormArea show={true} position='align-left' title='Company Information' showBackButton={true}>
-                            <InfoBox show={true} align='align-left'>
-                             Please fill in your company’s information so we can know about your business?
-                            </InfoBox>
-                
-                    <div className="form-fields">
-                            
-                            
-                            <FormField title='Business Name'>
-                                <input type="text" className="input-field" placeholder="Enter your Business Name" required/>
-                            </FormField>
-                            
-                            <FormField title='Business Address'>
-                                 <input type="text" className="input-field" placeholder="Enter your Business Address" required/>
-                            </FormField>
-                            <FormField title='Country of Incorporation'>
-                                <br/>
-                                 <select className="input-field" placeholder="Select Country">
-                                    <option></option>
-                                    <option value="Nigeria">Nigeria</option>
-                                    <option value="Nigeria">Nigeria</option>
-                                 </select>
-                            </FormField>
+            <BreadCrumbs page={1} />
+            <BreadCrumb label="Company Info"/>
+            <FormArea show={true} position='align-left' title='Company Information' showBackButton={true}>
+                <InfoBox show={true} align='align-left'>
+                    Please fill in your company’s information so we can know about your business?
+                </InfoBox>
 
-                            <FormField title='Upload Document of Incorporation'>
-                                <br/>
-                                 <div className="filearea">
-                                    <div className="file-inside">
-                                        <i className="fa fa-camera"></i>
-                                        <div className="file-desc">
-                                            Upload Document of Incorporation
-                                        </div>
-                                    </div>
-                                 </div>
-                            </FormField>
-                            <InfoBox show={true} success={true} error={true}>
-                                 {errorText}
-                            </InfoBox>
 
-                            <LargeButton onClick={handleRegister}>
-                                Continue
-                            </LargeButton>
+                <Formik
+                    initialValues={initialValues}
+                    validationSchema={validateAddCompanyInfo}
+                    onSubmit={addCompanyInfo}
+                >
+                    {(formik) => (
+                        <Form>
 
-                    </div>
+                            <div className="form-fields">
+
+                                <FormControl
+                                    control="input"
+                                    type="text"
+                                    name="registrant_name"
+                                    label="Your Full Name"
+                                    placeholder="Your Full Name"
+                                />
+                                <FormControl
+                                    control="input"
+                                    type="text"
+                                    name="company_name"
+                                    label="Company Name"
+                                    placeholder="Company Name"
+                                />
+
+                                <FormControl
+                                    control="input"
+                                    type="text"
+                                    name="line_of_business"
+                                    label="Your line of Business"
+                                    placeholder="Your line of Business"
+                                />
+
+                                <FormControl
+                                    control="input"
+                                    type="text"
+                                    name="phone_number"
+                                    label="Phone number"
+                                    placeholder="Phone number"
+                                />
+
+                                <FormControl
+                                    control="input"
+                                    type="text"
+                                    name="company_website"
+                                    label="Company website (optional)"
+                                    placeholder="Company website"
+                                />
+                                <LargeButton type="submit" disabled={formik.isSubmitting}>
+                                    {formik.isSubmitting ? <CircularProgress size={6} isIndeterminate color='green.300' /> : 'Continue'}
+                                </LargeButton>
+                            </div>
+                        </Form>
+                    )}
+                </Formik>
             </FormArea>
-           
-            
-        </AppContainer>
+        </AppContainer >
     )
 }

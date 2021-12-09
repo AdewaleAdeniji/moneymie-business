@@ -81,13 +81,21 @@ button.add-ben {
     font-family: DM Sans;
     font-style: normal;
     font-weight: normal;
-    font-size: 10px;
+    font-size: 15px;
     line-height: 12px;
 /* identical to box height, or 120% */
 
 
 /* Money Grey/Grey 600 */
     color: #6B6F7D;
+}
+.float-right {
+    float: right;
+}
+.float-center {
+    text-align: center;
+    display: flex;
+    justify-content: center;
 }
 .beneficiary-list {
     margin-top: 21px;
@@ -103,13 +111,18 @@ table.ben-list {
     display: flex;
     justify-content: space-between;
     padding: 12px;
+    align-items: center;
     padding-left: 16px;
-    height: 36px;
+    height: 50px;
     border: 0.5px solid #E8F0FB;
+    transition: .5s;
 }
-
+.beneficiary:hover {
+    cursor: pointer;
+    background: #F2F0FA;
+}
 .beneficiary-list .trx {
-    width: 120px;
+    width: 200px;
     margin-left: 20px;
 }
 .type {
@@ -229,4 +242,18 @@ h4.ben-name {
     font-size: 14px;
     line-height: 18px;
     margin-top: 8px;
+}
+.form-fields.add-ben {
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
+.add-ben input.input-field {
+    width: 434px;
+    height: 40px;
+    margin-right: 48px;
+}
+.add-ben button {
+    width: 434px;
 }
