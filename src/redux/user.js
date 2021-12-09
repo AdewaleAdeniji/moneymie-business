@@ -4,7 +4,7 @@ export const getUser = () => {
   return localStorage.getItem('user_meta') ? JSON.parse(localStorage.getItem('user_meta')) : null;
 }
 export const getToken = () => {
-  return getUser()?.token || null;
+  return getUser()?.token ?? null;
 }
 
 // const getUser = () => {

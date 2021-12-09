@@ -33,7 +33,7 @@ export const CreateAccount = (props) => {
         try {
             const res = await axios.post(`${config.baseUrl}/user/auth/signup`, values)
             dispatch(saveEmail(email))
-            dispatch(saveUser(res.data.data))
+            dispatch(saveUser(JSON.stringify(res.data)))
             history.push('/confirm-email')
         }
         catch (e) {
