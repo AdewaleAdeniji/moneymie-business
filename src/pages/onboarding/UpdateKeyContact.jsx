@@ -27,8 +27,9 @@ export const UpdateKeyContact = (props) => {
     const user = useSelector(state => state.user.user)
 
     const handleUpdateKeyContact = (values, onSubmitProps) => {
+        const body = { ...values, company_id: user.company.id }
 
-        request({ url: `/user/company/keycontact/${user.company.id}`, method: 'PATCH', data: values })
+        request({ url: `/user/company/keycontact/add`, method: 'POST', data: body })
             .then(res => {
                 onSubmitProps.setSubmitting(false)
                 history.push('/review')

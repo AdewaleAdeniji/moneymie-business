@@ -7,6 +7,7 @@ import { getToken } from '../redux/user';
 const client = axios.create({ baseURL: config.baseUrl })
 
 
+
 export const request = async ({ ...options }) => {
     const token = getToken()
     if (token !== null) {
@@ -27,6 +28,9 @@ export const request = async ({ ...options }) => {
 export const fetcher = (url) => {
     return request({ url: url })
 }
+
+
+
 
 
 
