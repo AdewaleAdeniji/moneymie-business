@@ -13,6 +13,7 @@ import config from '../../config'
 import FormControl from '../../components/Form/FormControl';
 import { validateUpdateCompanyInfo } from '../../validations/onboarding/updateCompanyInfo';
 import { showToast } from '../../utils/toast';
+import { request } from '../../utils/axios';
 
 
 const initialValues = {
@@ -33,26 +34,25 @@ export const UpdateCompanyInfo = (props) => {
 
     const user = useSelector(state => state.user.user)
 
-    console.log(user)
-
-    const handleUpdateCompanyInfo = async (values, onSubmitProps) => {
+    const handleUpdateCompanyInfo = (values, onSubmitProps) => {
         if (!imageUrl) {
             showToast("error", "Please upload your certificate of incorporation")
             return
         }
         const body = { ...values, certificate_of_incorporation: imageUrl, user_id: user.id, company_id: user.company_id }
-        console.log(body)
-        try {
-            const res = await axios.post(`${config.baseUrl}/user/company/update`, body)
-            history.push('/owner-info');
 
-        }
-        catch (e) {
-            showToast("error", e.response.data.message)
-        }
-        finally {
-            onSubmitProps.setSubmitting(false)
-        }
+        request({ url: '/user/company/update', method: 'POST', data: body })
+            .then(res => {
+
+                onSubmitProps.setSubmitting(false)
+                history.push('/owner-info')
+            })
+            .catch(err => {
+                onSubmitProps.setSubmitting(false)
+
+                showToast("error", err.message)
+
+            })
     }
 
     const uploadImage = async (file) => {
@@ -94,7 +94,7 @@ export const UpdateCompanyInfo = (props) => {
         <AppContainer>
             <BreadCrumbs page={1} />
             <div className={`form-title align-center`} style={{ marginTop: 40 }}>
-                Hello Company Name, Thanks for signing up,
+                Hello {user.company.name}, Thanks for signing up,
                 Please complete your registration to start making paymemts
             </div>
 

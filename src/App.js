@@ -29,6 +29,7 @@ import { UpdateCompanyInfo } from './pages/onboarding/UpdateCompanyInfo';
 import Dashboard from './pages/dashboard';
 import ProtectedRoute from './routes/authProtected';
 import AddBeneficiary from './pages/beneficiary/addBen';
+import { UpdateKeyContact } from './pages/onboarding/UpdateKeyContact';
 function App(props) {
   //console.log(data);
 
@@ -49,6 +50,7 @@ function App(props) {
           <Route path='/reset-password' component={ResetPassword} />
           <Route path='/verify-email/:token' component={VerifyEmail} />
           <Route path='/update-company-info' component={UpdateCompanyInfo} />
+          <Route path='/update-key-contact' component={UpdateKeyContact} />
         </Router>
       </ChakraProvider>
     </Provider>

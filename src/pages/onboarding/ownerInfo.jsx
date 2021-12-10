@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { useQuery } from 'react-query';
 import { Progress, CircularProgress } from '@chakra-ui/react'
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
@@ -13,6 +14,7 @@ import { validateAddOwner } from '../../validations/onboarding/addOwnerInfo';
 import config from '../../config'
 import { showToast } from '../../utils/toast';
 import { useSelector } from 'react-redux';
+import { fetcher, request } from '../../utils/axios';
 
 
 const initialValues = {
@@ -24,7 +26,7 @@ const initialValues = {
 export const OwnerInfo = (props) => {
     const history = useHistory()
     const fileInputRef = useRef()
-    const [editing, setEditing] = useState(true)
+
 
     const [progress, setProgress] = useState(0);
     const [imageUrl, setImageUrl] = useState(null);
@@ -35,7 +37,15 @@ export const OwnerInfo = (props) => {
 
     const user = useSelector(state => state.user.user)
 
-    const handleAddOwner = async (values, onSubmitProps) => {
+    const { isLoading, data, isError, error, isFetching, refetch } = useQuery('owner-info', () => request({ url: `/user/company/owners/${user.company.id}` }), {
+        select: (data) => {
+            return data.data.data;
+        }
+    })
+
+    const [editing, setEditing] = useState(!data || data.length === 0);
+
+    const handleAddOwner = (values, onSubmitProps) => {
 
         if (!imageUrl) {
             showToast("error", "Please upload a means of identification")
@@ -44,19 +54,20 @@ export const OwnerInfo = (props) => {
 
         const body = { ...values, means_of_identification: imageUrl, user_id: user.id, company_id: user.company_id }
         try {
-            await axios.post(`${config.baseUrl}/user/company/owner/add`, body)
-            setOwners([...owners, body])
+            request({ url: '/user/company/owner/add', method: 'POST', data: body })
+            refetch()
             setImageUrl(null)
             setEditing(false)
             onSubmitProps.setSubmitting(false)
         }
         catch (e) {
             showToast("error", e.response.data.message)
+            onSubmitProps.setSubmitting(false)
         }
     }
 
     const handleContinue = () => {
-        if (owners.length === 0) {
+        if (data.length === 0) {
             showToast("error", "Please add at least one owner")
             return;
         }
@@ -96,16 +107,15 @@ export const OwnerInfo = (props) => {
     }
 
     const fileName = (url) => {
-        const file = url.split('/')
-        const lastElement = file[file.length - 1]
-        return lastElement
+        const file = url.split('.')
+        return file[file.length - 1]
     }
 
     return (
         <AppContainer>
             <BreadCrumbs page={2} />
             <FormArea show={true} position='align-left' title='' showBackButton={true}>
-                {owners.map((owner, index) => {
+                {data?.map((owner, index) => {
                     return (
                         <div key={index} className="owner-info">
                             <div className="title-tile">
@@ -153,7 +163,7 @@ export const OwnerInfo = (props) => {
                                     </div>
                                     <div className="owner-sub">
                                         <div className="owner-image">
-                                            {fileName(owner.means_of_identification)}
+                                            {`image.${fileName(owner.identification_photo_url)}`}
                                         </div>
                                         <button className="btn btn-view">
                                             View
@@ -236,7 +246,7 @@ export const OwnerInfo = (props) => {
 
                                                     {imageUrl && !isUploading &&
                                                         <div className="file-desc">
-                                                            {fileName(imageUrl)}
+                                                            {`image.${fileName(imageUrl)}`}
                                                         </div>
                                                     }
                                                 </div>

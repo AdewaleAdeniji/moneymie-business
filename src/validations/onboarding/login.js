@@ -1,5 +1,4 @@
 import * as Yup from 'yup';
-import { passwordValidator } from '../validators';
 
 
 export const validateLogin = Yup.object({
