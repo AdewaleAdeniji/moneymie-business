@@ -40,10 +40,14 @@
     align-items: center;
     padding: 11px;
     padding-right: 16px;
+    cursor: pointer;
     padding-left: 16px;
     border-bottom: .1px solid #E8F0FB;
+    transition: .4s;
 }
-
+.transaction:hover {
+    background: #F2F0FA;
+}
 h6.transaction-desc {
     font-family: DM Sans;
     font-style: normal;

@@ -6,7 +6,10 @@ import { Container } from '../../components/container';
 import { BalanceCard } from '../../components/card/card';
 import { Link } from 'react-router-dom';
 import { Transaction } from '../transaction/transaction';
-
+import axios from 'axios';
+import { getUserTransactions } from './data';
+import { toast } from 'react-toastify';
+import moment from 'moment';
 export default class Transactions extends Component{
     constructor(props){
         super();
@@ -14,27 +17,38 @@ export default class Transactions extends Component{
             loggedin: false,
             data:{},
             loaderText:'',
-            showloader:true
+            showloader:true,
+            transactions:[]
         }
     }
     componentDidMount(){
-        if(!loggedIn()){
-            this.props.history.push('/login');   
-        }
-        // get user balances
-        this.getUserBalance();        
+        this.getTransactions();
     }
-    getUserBalance(){
+    async getTransactions(){
         this.setState({loaderText:'Fetching transactions'})
-        getUser()
-        .then(response=>response.json())
-        .then((data)=>{
-            this.setState({loggedin:true,data:data,showloader:false});
-        })
-        .catch((err)=>{
+        
+        try {
+            const transactions = await getUserTransactions();  
+            this.setState({transactions:transactions.data.data});
+        }
+        catch(e){
+            if (e?.response?.status === 401) {
+                this.props.history.push("/login");
+            }
+            toast.error('Request Failed');
+        }
+        finally {
+            this.setState({showloader:false});
+        }
 
-        })
+        //setTransactions(transactions.res)
     }
+    viewReceipt = (e) => {
+        if(e.target===e.currentTarget){
+        const transaction = e.target.getAttribute("transaction");
+        this.props.history.push("/transaction/details", { transaction });
+        }
+    };
     render(){
         return (
             <Container page='transactions'>  
@@ -45,58 +59,25 @@ export default class Transactions extends Component{
                             Your Transactions
                         </div>
                         <div className="trx">
-                            
+                            {/* <button className="btn btn-primary">Export CSV</button> */}
                         </div>
                     </div>
                     <div className="transactions-body">
-                        <Transaction 
-                            status='inflow' 
-                            transactionDate='March 22' 
-                            description='You received money from Cecelia Awogbu' 
-                            amount='$5000'
-                        />
-                        <Transaction 
-                            status='outflow' 
-                            transactionDate='March 22' 
-                            description='You sent money to Bangalee' 
-                            amount='$5000'
-                        />
-                        <Transaction 
-                            status='failed' 
-                            transactionDate='March 22' 
-                            description='You sent money to Bangalee' 
-                            amount='$5000'
-                        />
-                        <Transaction 
-                            status='fund' 
-                            transactionDate='March 22' 
-                            description='You funded via card' 
-                            amount='$5000'
-                        />
-                        <Transaction 
-                            status='inflow' 
-                            transactionDate='March 22' 
-                            description='You received money from Cecelia Awogbu' 
-                            amount='$5000'
-                        />
-                        <Transaction 
-                            status='outflow' 
-                            transactionDate='March 22' 
-                            description='You sent money to Bangalee' 
-                            amount='$5000'
-                        />
-                        <Transaction 
-                            status='failed' 
-                            transactionDate='March 22' 
-                            description='You sent money to Bangalee' 
-                            amount='$5000'
-                        />
-                        <Transaction 
-                            status='fund' 
-                            transactionDate='March 22' 
-                            description='You funded via card' 
-                            amount='$5000'
-                        />
+                        {
+                            this.state.transactions.map((transaction)=>{
+                                return (
+                                    <Transaction 
+                                    transaction={JSON.stringify(transaction)}
+                                        onClick={this.viewReceipt}
+                                        status={transaction.status} 
+                                        transactionDate={moment(transaction.createdAt).format("MMM Do YY")}
+                                        description={transaction.Beneficiary.contact_name + ' - '  + transaction.Beneficiary.bank_name} 
+                                        amount={transaction.amount}
+                                    />
+                                )
+                            })
+                        }
+                        
                         
                     </div>
                 </div>
