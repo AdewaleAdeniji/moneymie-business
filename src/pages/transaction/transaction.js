@@ -1,3 +1,5 @@
+import { Badge } from "@chakra-ui/layout";
+
 const getStatus = (status) => {
   switch (status) {
     case "fund":
@@ -7,7 +9,7 @@ const getStatus = (status) => {
     case "outflow":
       return <div className="transaction-status out-flow">&larr;</div>;
     default:
-      return <div className="transaction-status failed">&times;</div>;
+      return <div className="transaction-status out-flow">&larr;</div>;
   }
 };
 export const Transaction = ({
@@ -15,9 +17,11 @@ export const Transaction = ({
   status,
   transactionDate,
   amount,
+  onClick,
+  transaction
 }) => {
   return (
-    <div className="transaction">
+    <div className="transaction" onClick={onClick} transaction={transaction}>
       <div className="transaction-details">
         {getStatus(status)}
         <div className="transaction-detail">
@@ -25,7 +29,7 @@ export const Transaction = ({
           <div className="transaction-date">{transactionDate}</div>
         </div>
       </div>
-      <div className="transaction-amount">{amount}</div>
+      <div className="transaction-amount">{amount}<br/><Badge colorScheme={status==='success'?'green':'purple'}>{status}</Badge></div>
     </div>
   );
 };

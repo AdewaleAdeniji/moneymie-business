@@ -29,11 +29,9 @@ export const CompanyInfo = (props) => {
     const history = useHistory()
 
     const user = useSelector(state => state.user.user)
-
     const addCompanyInfo = async (values, onSubmitProps) => {
 
         const body = { ...values, "user_id": user.id, }
-
         try {
             const res = await axios.post(`${config.baseUrl}/user/application/intent/new`, body)
             showToast("success", res.data.message)

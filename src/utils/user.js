@@ -5,7 +5,8 @@ import { logoutUser } from '../redux/user';
 
 export const GetLoggedInUser = () => {
     const {user} = useSelector((state) => state.user);
-    return user;
+    return typeof user == "string" ? JSON.parse(user) : user;
+    //return user;
 }
 export const GetUserToken = () => {
     const {token} = useSelector((state) => state.user);

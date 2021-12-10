@@ -14,7 +14,7 @@ export const AwaitVerify = () => {
                 <img className="align-center await-img" src="assets/await.png" alt="Awaiting Verification"/>
                 <h4 className="review-title align-center">Awaiting Verification</h4>
                 <InfoBox show={true}>
-                     Please wait while we verify your verification, we will get back to you soon
+                Your KYC/KYB details has been submitted , please wait while we check your details and verify your business account. We will bet back to you in 48 hours
                 </InfoBox>
                       
             </FormArea>

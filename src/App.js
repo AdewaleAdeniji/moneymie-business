@@ -31,8 +31,9 @@ import ProtectedRoute from './routes/authProtected';
 import AddBeneficiary from './pages/beneficiary/addBen';
 import Logout from './pages/onboarding/logout';
 import { ToastContainer, toast } from 'react-toastify';
-
+import AllTransactions from './pages/transaction/AllTransactions';
 import 'react-toastify/dist/ReactToastify.css';
+import TransactionDetails from './pages/transaction/TransactionDetails';
 function App(props) {
   //console.log(data);
 
@@ -54,10 +55,12 @@ function App(props) {
           <Route path='/verify-email/:token' component={VerifyEmail} />
           <Route path='/logout' component={Logout}/>
           <ProtectedRoute path="/user/dashboard" component={Beneficiaries}/>
-          <ProtectedRoute path="/user/transactions" component={Transactions}/>
+          <Route path="/user/transactions" component={Transactions}/>
           <ProtectedRoute path="/user/beneficiaries" component={Beneficiaries}/>
           <ProtectedRoute path="/user/beneficiary/:id" component={Beneficiary}/>
           <ProtectedRoute path="/beneficiary/create" component={AddBeneficiary}/>
+          <ProtectedRoute path="/transactions" component={AllTransactions}/>
+          <ProtectedRoute path="/transaction/details" component={TransactionDetails}/>
           <Route path='/update-company-info' component={UpdateCompanyInfo} />
         </Router>
         <ToastContainer />
