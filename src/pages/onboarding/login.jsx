@@ -34,8 +34,10 @@ export const Login = (props) => {
             const user = res.data.data
             user.token =  token;
             localStorage.removeItem('user_meta');
-            await dispatch(logoutUser());
-            await dispatch(loginUser(JSON.stringify(user)));
+            dispatch(logoutUser());
+
+
+            dispatch(loginUser({ ...user, token: res.data.token }));
             if (!user.email_verified) {
                 return history.push('/confirm-email')
             }
@@ -46,12 +48,11 @@ export const Login = (props) => {
                 return history.push('/await-verify')
             }
 
-            if (user.company.final_verification_status !== "APPROVED") {
+            if (!user.company.reg_number) {
                 return history.push('/update-company-info')
             }
 
             history.push('/user/dashboard')
-
 
         }
         catch (e) {

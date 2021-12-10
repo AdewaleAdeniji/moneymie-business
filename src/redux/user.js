@@ -36,12 +36,12 @@ export const userSlice = createSlice({
     },
     saveUser: (state, action) => {
       state.user = action.payload
-      localStorage.setItem('user_meta', action.payload)
+      localStorage.setItem('user_meta', JSON.stringify(action.payload))
     },
     loginUser: (state, action) => {
       state.user = action.payload
       state.loggedin = true;
-      localStorage.setItem('user_meta', action.payload)
+      localStorage.setItem('user_meta', JSON.stringify(action.payload))
     },
     logoutUser: (state, action) => {
       state.token = '';

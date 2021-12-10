@@ -286,7 +286,7 @@ i.fa.fa-camera {
     border-radius: 16px;
     margin-top: 15px;
     margin-bottom: 15px;
-    padding: 24px;
+    padding: 16px 24px;
  
 }
 
@@ -323,6 +323,7 @@ i.fa.fa-camera {
 .owner-infos {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .owner:last-child {margin-right: 20%;}
@@ -409,9 +410,7 @@ a button.i-cancel {
     width: 16px;
     font-size: 13px;
 }
-.edit-info {
-    margin-bottom: 32px;
-}
+
 h4.review-title {
     margin-top: 32px;
     font-family: DM Sans;
