@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { Progress, CircularProgress } from '@chakra-ui/react'
 import axios from 'axios';
-
+import { useSelector } from 'react-redux';
 import { Formik, Form } from 'formik';
 import { AppContainer } from '../../components/container';
 import { BreadCrumbs } from '../../components/breadcrumbs/breadcrumbs';
@@ -31,14 +31,19 @@ export const UpdateCompanyInfo = (props) => {
 
     const history = useHistory();
 
+    const user = useSelector(state => state.user.user)
+
+    console.log(user)
+
     const handleUpdateCompanyInfo = async (values, onSubmitProps) => {
         if (!imageUrl) {
             showToast("error", "Please upload your certificate of incorporation")
             return
         }
-        const body = { ...values, certificate_of_incorporation: imageUrl }
+        const body = { ...values, certificate_of_incorporation: imageUrl, user_id: user.id, company_id: user.company_id }
+        console.log(body)
         try {
-            const res = await axios.post(`${config.baseUrl}/user/login`, body)
+            const res = await axios.post(`${config.baseUrl}/user/company/update`, body)
             history.push('/owner-info');
 
         }
