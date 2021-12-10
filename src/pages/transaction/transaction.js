@@ -20,6 +20,7 @@ export const Transaction = ({
   onClick,
   transaction
 }) => {
+  console.log(status);
   return (
     <div className="transaction" onClick={onClick} transaction={transaction}>
       <div className="transaction-details">
@@ -29,7 +30,7 @@ export const Transaction = ({
           <div className="transaction-date">{transactionDate}</div>
         </div>
       </div>
-      <div className="transaction-amount">{amount}<br/><Badge colorScheme={status==='success'?'green':'purple'}>{status}</Badge></div>
+      <div className="transaction-amount">${amount}<br/><Badge colorScheme={status=='success'?'green':'purple'}>{status}</Badge></div>
     </div>
   );
 };

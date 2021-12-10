@@ -9,6 +9,10 @@ import { beneficiaries } from "./data";
 import { showToast } from "../../utils/toast";
 import { useStatus } from "../../utils/user";
 import { Link } from "react-router-dom";
+import Swal from 'sweetalert2';
+import { deleteBen } from "./data";
+import {toast} from 'react-toastify';
+
 const Beneficiaries = (props) => {
   const [showloader, setShowLoader] = useState(true);
   const [loaderText, setLoaderText] = useState("");
@@ -40,13 +44,40 @@ const Beneficiaries = (props) => {
       setShowLoader(false);
     }
   };
-  const viewBeneficiary = (e) => {
-    const ben = e.target.getAttribute("beneficiary");
-    props.history.push("/user/beneficiary/45", { beneficiary: ben });
+  const viewBeneficiary = (beneficiary) => {
+    //const ben = e.target.getAttribute("beneficiary");
+    props.history.push("/user/beneficiary/45", { beneficiary: beneficiary });
   };
   const addBen = () => {
     props.history.push("/beneficiary/create");
   };
+  const deleteBeneficiary = (id) => {
+    Swal.fire({
+        text: 'Are you sure you want to delete this beneficiary?',
+        footer: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3A3391',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+            toast.loading('Deleting Beneficiary');
+            try {
+                const deleteben = await deleteBen(id);
+                toast.dismiss();
+                toast.success('Beneficiary Deleted Successfully');
+                getUser();
+            }
+            catch(e){
+                console.log(e);
+                toast.dismiss();
+                toast.warning('Failed to delete Beneficiary');
+            }
+          
+        }
+      })
+  }
   return (
     <Container page="dashboard">
       <Loader show={showloader} text={loaderText} />
@@ -107,12 +138,14 @@ const Beneficiaries = (props) => {
                       </MenuButton>
                       <MenuList>
                         <MenuItem
-                          onClick={viewBeneficiary}
+                          onClick={()=>viewBeneficiary(JSON.stringify(beneficiary))}
                           beneficiary={JSON.stringify(beneficiary)}
                         >
-                          View
+                         <i className="fa fa-eye"></i> &nbsp; View
                         </MenuItem>
-                        <MenuItem>Send Money</MenuItem>
+                        <MenuItem onClick={()=>deleteBeneficiary(beneficiary.id)}>
+                          <i className='fa fa-trash'></i> &nbsp; Delete
+                        </MenuItem>
                       </MenuList>
                     </Menu>
                     {/* <Link to="/user/beneficiary/45" className="float-center">View</Link> */}
