@@ -11,14 +11,14 @@ export default class SideBar extends Component {
     }
     componentDidMount(){
         
-        console.log(user);
+        // console.log(user);
     }
     render(){
         const user = JSON.parse(localStorage.getItem('user_meta'))
         return (
             <aside className="sidebar">
                 <div className="sidebar-header">
-                    <img src="%PUBLIC_URL%/assets/logo.png" alt="App logo"/>
+                    <img src={`${process.env.PUBLIC_URL}/assets/logo.png`} alt="App logo"/>
                 </div>
                 <div className="sidebar-content">
                     <div className="sidebar-links">
@@ -29,7 +29,7 @@ export default class SideBar extends Component {
                                     return (
                                         <li className={key===this.props.itemKey ? 'active' : ''} key={key}>
                                             <Link to={path}>
-                                                <img src={`../assets/icons/${icon}`} alt={`${label} Icon`}/>
+                                                <img src={`${process.env.PUBLIC_URL}/assets/icons/${icon}`} alt={`${label} Icon`}/>
                                                 {label}
                                             </Link>
                                         </li>
@@ -52,7 +52,15 @@ export default class SideBar extends Component {
                                           EMAIL
                                         </div>
                                         <div className="owner-sub">
-                                            {user.data.email}
+                                            {user.email}
+                                        </div>
+                                    </div>
+                                    <div className="owner">
+                                        <div className="owner-sup">
+                                          PHONE NUMBER
+                                        </div>
+                                        <div className="owner-sub">
+                                            {user.company.phone_number}
                                         </div>
                                     </div>
                                     

@@ -30,8 +30,9 @@ export const Login = (props) => {
         try {
             const res = await axios.post(`${config.baseUrl}/user/login`, values)
             onSubmitProps.setSubmitting(false)
-
+            const token = res.data.token;
             const user = res.data.data
+            user.token =  token;
             localStorage.removeItem('user_meta');
             await dispatch(logoutUser());
             await dispatch(loginUser(JSON.stringify(user)));

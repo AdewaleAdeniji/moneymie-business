@@ -40,7 +40,7 @@ export default class Beneficiary extends Component {
   render() {
     return (
       <Container page="beneficiary">
-          <Pay show={this.state.showPay} onClose={this.togglePay} beneficiary_name={this.state.beneficiary.contact_name}/>
+          <Pay show={this.state.showPay} onClose={this.togglePay} beneficiary={this.state.beneficiary}/>
         <Loader show={this.state.showloader} text={this.state.loaderText} />
         
         <div className="col-md-12 ben">
