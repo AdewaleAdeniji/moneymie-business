@@ -5,6 +5,9 @@ import { Loader } from "../../components/loader";
 import { Container } from "../../components/container";
 import './beneficiary.css';
 import Pay from "../pay";
+import Swal from 'sweetalert2'
+import { deleteBen } from "./data";
+import { toast } from "react-toastify";
 export default class Beneficiary extends Component {
   constructor(props) {
     super();
@@ -18,9 +21,11 @@ export default class Beneficiary extends Component {
     };
     this.goBack = this.goBack.bind(this);
     this.togglePay = this.togglePay.bind(this);
+    this.deleteBeneficiary  =  this.deleteBeneficiary.bind(this);
   }
   componentDidMount() {
-    
+    console.log(this.state.beneficiary);
+    return;
   }
   getUserBalance() {
     this.setState({ loaderText: "Fetching Profile..." });
@@ -37,6 +42,33 @@ export default class Beneficiary extends Component {
   togglePay(){
     this.setState({showPay:!this.state.showPay})
   }
+  deleteBeneficiary(){
+    Swal.fire({
+        text: 'Are you sure you want to delete this beneficiary?',
+        footer: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3A3391',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+            toast.loading('Deleting Beneficiary');
+            try {
+                const deleteben = await deleteBen(this.state.beneficiary?.id);
+                toast.dismiss();
+                toast.success('Beneficiary Deleted Successfully');
+                this.goBack();
+            }
+            catch(e){
+                console.log(e);
+                toast.dismiss();
+                toast.warning('Failed to delete Beneficiary');
+            }
+          
+        }
+      })
+  }
   render() {
     return (
       <Container page="beneficiary">
@@ -49,18 +81,18 @@ export default class Beneficiary extends Component {
                 Back
             </button>
             <div className="left-aligned">
-                <button>
+                <button onClick={this.deleteBeneficiary}>
                     Delete
                 </button>
-                <button>
+                {/* <button>
                     Edit
-                </button>
+                </button> */}
                 <button className="pay" onClick={this.togglePay}>
                     Pay User
                 </button>
             </div>
         </div>
-        <h4 className="ben-name">{this.state.beneficiary.contact_name}</h4>
+        <h4 className="ben-name">{this.state.beneficiary?.contact_name}</h4>
         <div className="col-md-12">
             <div className="box-col">
 
@@ -75,17 +107,17 @@ export default class Beneficiary extends Component {
                         </div>
                         <div className="detail">
                             <h5>NAME</h5>
-                            <p>{this.state.beneficiary.contact_name}</p>
+                            <p>{this.state.beneficiary?.contact_name}</p>
                         </div>
                     </div>
                     <div className="details">
                         <div className="detail">
                             <h5>Phone Number</h5>
-                            <p>{this.state.beneficiary.phone_number}</p>
+                            <p>{this.state.beneficiary?.phone_number}</p>
                         </div>
                         <div className="detail">
                             <h5>Beneficiary Contact name</h5>
-                            <p>{this.state.beneficiary.contact_name}</p>
+                            <p>{this.state.beneficiary?.contact_name}</p>
                         </div>
                     </div>
                     
@@ -98,17 +130,17 @@ export default class Beneficiary extends Component {
                     <div className="details">
                         <div className="detail">
                             <h5>Contact name</h5>
-                            <p>{this.state.beneficiary.contact_name}</p>
+                            <p>{this.state.beneficiary?.contact_name}</p>
                         </div>
                         <div className="detail">
                             <h5>Phone Number</h5>
-                            <p>{this.state.beneficiary.phone_number}</p>
+                            <p>{this.state.beneficiary?.phone_number}</p>
                         </div>
                     </div>
                     <div className="details">
                         <div className="detail">
                             <h5>Address</h5>
-                            <p>{this.state.beneficiary.address}</p>
+                            <p>{this.state.beneficiary?.address}</p>
                         </div>
                     </div>
                     
@@ -123,31 +155,31 @@ export default class Beneficiary extends Component {
                         <div className="details">
                             <div className="detail">
                                 <h5>RECEIVING BANK NAME</h5>
-                                <p>{this.state.beneficiary.bank_name}</p>
+                                <p>{this.state.beneficiary?.bank_name}</p>
                             </div>
                             <div className="detail">
                                 <h5>RECEIVING BANK ADDRESS</h5>
-                                <p>{this.state.beneficiary.address}</p>
+                                <p>{this.state.beneficiary?.address}</p>
                             </div>
                         </div>
                         <div className="details">
                             <div className="detail">
                                 <h5>Swift Code</h5>
-                                <p>{this.state.beneficiary.swift_code}</p>
+                                <p>{this.state.beneficiary?.swift_code}</p>
                             </div>
                             <div className="detail">
                                 <h5>Account Number</h5>
-                                <p>{this.state.beneficiary.account_number}</p>
+                                <p>{this.state.beneficiary?.account_number}</p>
                             </div>
                         </div>
                         <div className="details">
                             <div className="detail">
                                 <h5>Futher Credit</h5>
-                                <p>{this.state.beneficiary.further_credit}</p>
+                                <p>{this.state.beneficiary?.further_credit}</p>
                             </div>
                             <div className="detail">
                                 <h5>Further Credit Address</h5>
-                                <p>{this.state.beneficiary.further_credit_address}</p>
+                                <p>{this.state.beneficiary?.further_credit_address}</p>
                             </div>
                         </div>
                     </div>    

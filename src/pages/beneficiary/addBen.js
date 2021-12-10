@@ -24,6 +24,7 @@ const AddBeneficiary = (props) => {
   const addBene = async () => {
       toast.loading('Adding Beneficiary');
       try {
+        console.log(bank_country);
       const res =  await addBen({
         "contact_name" : contact_name,
         "address" : address,
@@ -35,7 +36,7 @@ const AddBeneficiary = (props) => {
         "bank_name" :bank_name,   
         "phone_number" : phone_number,
         "bank_swift" : swiftCode,
-        "bank_country" : bank_country.name,
+        "bank_country" : bank_country,
         "company_id" : user.company_id,
          "name" : contact_name,
         "email" : user.email
