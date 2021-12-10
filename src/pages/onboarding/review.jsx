@@ -25,6 +25,10 @@ export const ReviewInfo = (props) => {
         }
     })
 
+    const { data: contact } = useQuery('key-contact', () => request({ url: `/user/company/keycontact/${user.company.id}` }))
+
+    console.log(contact)
+
     const handleSubmit = () => {
         const body = { user_id: user.id, company_id: user.company.id }
 
