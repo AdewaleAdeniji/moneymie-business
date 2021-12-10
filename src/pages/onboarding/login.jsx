@@ -45,7 +45,6 @@ export const Login = (props) => {
             if (user.company.intent_verification_status === 'PENDING') {
                 return history.push('/await-verify')
             }
-
             if (user.company.final_verification_status !== "APPROVED") {
                 return history.push('/update-company-info')
             }
