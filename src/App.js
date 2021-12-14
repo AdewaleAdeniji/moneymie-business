@@ -29,6 +29,7 @@ import { UpdateCompanyInfo } from './pages/onboarding/UpdateCompanyInfo';
 import Dashboard from './pages/dashboard';
 import ProtectedRoute from './routes/authProtected';
 import AddBeneficiary from './pages/beneficiary/addBen';
+import { UpdateKeyContact } from './pages/onboarding/UpdateKeyContact';
 import Logout from './pages/onboarding/logout';
 import { ToastContainer, toast } from 'react-toastify';
 import AllTransactions from './pages/transaction/AllTransactions';
@@ -62,6 +63,7 @@ function App(props) {
           <ProtectedRoute path="/transactions" component={AllTransactions}/>
           <ProtectedRoute path="/transaction/details" component={TransactionDetails}/>
           <Route path='/update-company-info' component={UpdateCompanyInfo} />
+          <Route path='/update-key-contact' component={UpdateKeyContact} />
         </Router>
         <ToastContainer />
       </ChakraProvider>

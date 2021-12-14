@@ -20,28 +20,44 @@ const initialValues = {
 };
 
 export const Login = (props) => {
-  const history = useHistory();
-  const dispatch = useDispatch();
 
-  const handleLogIn = async (values, onSubmitProps) => {
-    try {
-      const res = await axios.post(`${config.baseUrl}/user/login`, values);
-      onSubmitProps.setSubmitting(false);
-      const token = res.data.token;
-      const user = res.data.data;
-      user.token = token;
-      localStorage.removeItem("user_meta");
-      await dispatch(logoutUser());
-      await dispatch(loginUser(JSON.stringify(user)));
-      if (!user.email_verified) {
-        return history.push("/confirm-email");
-      }
-      if (!user.company_id) {
-        return history.push("/company-info");
-      }
-      if (user.company.intent_verification_status === "PENDING") {
-        return history.push("/await-verify");
-      }
+    const history = useHistory()
+    const dispatch = useDispatch()
+
+    const handleLogIn = async (values, onSubmitProps) => {
+        try {
+            const res = await axios.post(`${config.baseUrl}/user/login`, values)
+            onSubmitProps.setSubmitting(false)
+            const token = res.data.token;
+            const user = res.data.data
+            user.token =  token;
+            localStorage.removeItem('user_meta');
+            dispatch(logoutUser());
+
+
+            dispatch(loginUser({ ...user, token: res.data.token }));
+            if (!user.email_verified) {
+                return history.push('/confirm-email')
+            }
+            if (!user.company_id) {
+                return history.push('/company-info')
+            }
+            if (user.company.intent_verification_status === 'PENDING') {
+                return history.push('/await-verify')
+            }
+
+            if (!user.company.reg_number) {
+                return history.push('/update-company-info')
+            }
+
+            history.push('/user/dashboard')
+
+        }
+        catch (e) {
+            showToast("error", e.response.data.message)
+            onSubmitProps.setSubmitting(false)
+        }
+
 
       if (
         !user.company.reg_number &&
