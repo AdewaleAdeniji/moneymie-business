@@ -19,9 +19,9 @@ export default class Dashboard extends Component {
     };
   }
   componentDidMount() {
-    if (!loggedIn()) {
-      this.props.history.push("/login");
-    }
+    // if (!loggedIn()) {
+    //   this.props.history.push("/login");
+    // }
     // get user balances
     this.getUserBalance();
   }

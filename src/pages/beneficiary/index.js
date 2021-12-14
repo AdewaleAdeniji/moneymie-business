@@ -9,9 +9,10 @@ import { beneficiaries } from "./data";
 import { showToast } from "../../utils/toast";
 import { useStatus } from "../../utils/user";
 import { Link } from "react-router-dom";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 import { deleteBen } from "./data";
-import {toast} from 'react-toastify';
+import { toast } from "react-toastify";
+
 
 const Beneficiaries = (props) => {
   const [showloader, setShowLoader] = useState(true);
@@ -27,6 +28,71 @@ const Beneficiaries = (props) => {
     }
     document.title = "Beneficiaries";
   });
+  const deleteBeneficiary = (id) => {
+    Swal.fire({
+      text: "Are you sure you want to delete this beneficiary?",
+      footer: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3A3391",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        toast.loading("Deleting Beneficiary");
+        try {
+          const deleteben = await deleteBen(id);
+          toast.dismiss();
+          toast.success("Beneficiary Deleted Successfully");
+          getUser();
+        } catch (e) {
+          console.log(e);
+          toast.dismiss();
+          toast.warning("Failed to delete Beneficiary");
+        }
+      }
+    });
+  };
+  const viewBeneficiary = (beneficiary) => {
+    //const ben = e.target.getAttribute("beneficiary");
+    props.history.push("/user/beneficiary/45", { beneficiary: beneficiary });
+  };
+  const Beneficiary  = ({beneficiary}) => {
+    return (
+      <div className="beneficiary">
+                    <div className="trx type">{beneficiary.payment_type}</div>
+                    <div className="trx">{beneficiary.contact_name}</div>
+                    <div className="trx">{beneficiary.contact_name}</div>
+                    <div className="trx">{beneficiary.contact_name}</div>
+                    <div className="trx">{beneficiary.contact_name}</div>
+                    <div className="trx">{beneficiary.phone_number}</div>
+                    <div className="trx action">
+                      Pay Beneficiary
+                      <Menu>
+                        <MenuButton className="btn-more">
+                          <i className="fa fa-ellipsis-v"></i>
+                        </MenuButton>
+                        <MenuList>
+                          <MenuItem
+                            onClick={() =>
+                              viewBeneficiary(JSON.stringify(beneficiary))
+                            }
+                            beneficiary={JSON.stringify(beneficiary)}
+                          >
+                            <i className="fa fa-eye"></i> &nbsp; View
+                          </MenuItem>
+                          <MenuItem
+                            onClick={() => deleteBeneficiary(beneficiary.id)}
+                          >
+                            <i className="fa fa-trash"></i> &nbsp; Delete
+                          </MenuItem>
+                        </MenuList>
+                      </Menu>
+                      {/* <Link to="/user/beneficiary/45" className="float-center">View</Link> */}
+                    </div>
+                  </div>
+    )
+  }
   const getUser = async () => {
     const data = typeof user == "string" ? JSON.parse(user) : user;
     setPending(data.status === "PENDING");
@@ -44,42 +110,13 @@ const Beneficiaries = (props) => {
       setShowLoader(false);
     }
   };
-  const viewBeneficiary = (beneficiary) => {
-    //const ben = e.target.getAttribute("beneficiary");
-    props.history.push("/user/beneficiary/45", { beneficiary: beneficiary });
-  };
+  
   const addBen = () => {
     props.history.push("/beneficiary/create");
   };
-  const deleteBeneficiary = (id) => {
-    Swal.fire({
-        text: 'Are you sure you want to delete this beneficiary?',
-        footer: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3A3391',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
-      }).then(async (result) => {
-        if (result.isConfirmed) {
-            toast.loading('Deleting Beneficiary');
-            try {
-                const deleteben = await deleteBen(id);
-                toast.dismiss();
-                toast.success('Beneficiary Deleted Successfully');
-                getUser();
-            }
-            catch(e){
-                console.log(e);
-                toast.dismiss();
-                toast.warning('Failed to delete Beneficiary');
-            }
-          
-        }
-      })
-  }
+  
   return (
-    <Container page="dashboard">
+    <Container page="beneficiaries">
       <Loader show={showloader} text={loaderText} />
 
       {/* <div className="welcome-message">Hi {}</div> */}
@@ -118,39 +155,52 @@ const Beneficiaries = (props) => {
           <div className="transactions-title">
             <div className="trx type">Type</div>
             <div className="trx">Beneficiary Name</div>
-            <div className="trx">Beneficiary Address</div>
-            <div className="trx">Beneficiary Contact Number</div>
-            <div className="trx"></div>
+            <div className="trx">Beneficiary Number</div>
+            <div className="trx">Beneficiary Number</div>
+            <div className="trx">Beneficiary Number</div>
+            <div className="trx">Beneficiary Number</div>
+            <div className="trx">Actions</div>
           </div>
 
           <div className="transactions-body">
             {beneficiarieslist.map((beneficiary) => {
               return (
-                <div className="beneficiary">
+                <>
+                <Beneficiary beneficiary={beneficiary}/>
+                {/* <div className="beneficiary">
                   <div className="trx type">{beneficiary.payment_type}</div>
                   <div className="trx">{beneficiary.contact_name}</div>
-                  <div className="trx">{beneficiary.address}</div>
+                  <div className="trx">{beneficiary.contact_name}</div>
+                  <div className="trx">{beneficiary.contact_name}</div>
+                  <div className="trx">{beneficiary.contact_name}</div>
                   <div className="trx">{beneficiary.phone_number}</div>
                   <div className="trx float-center">
+                    Pay Beneficiary
                     <Menu>
-                      <MenuButton as={Button} className="btn-more">
+                      <MenuButton className="btn-more">
                         <i className="fa fa-ellipsis-v"></i>
                       </MenuButton>
                       <MenuList>
                         <MenuItem
-                          onClick={()=>viewBeneficiary(JSON.stringify(beneficiary))}
+                          onClick={() =>
+                            viewBeneficiary(JSON.stringify(beneficiary))
+                          }
                           beneficiary={JSON.stringify(beneficiary)}
                         >
-                         <i className="fa fa-eye"></i> &nbsp; View
+                          <i className="fa fa-eye"></i> &nbsp; View
                         </MenuItem>
-                        <MenuItem onClick={()=>deleteBeneficiary(beneficiary.id)}>
-                          <i className='fa fa-trash'></i> &nbsp; Delete
+                        <MenuItem
+                          onClick={() => deleteBeneficiary(beneficiary.id)}
+                        >
+                          <i className="fa fa-trash"></i> &nbsp; Delete
                         </MenuItem>
                       </MenuList>
                     </Menu>
-                    {/* <Link to="/user/beneficiary/45" className="float-center">View</Link> */}
+                    
                   </div>
                 </div>
+                 */}
+                </>
               );
             })}
           </div>
