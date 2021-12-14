@@ -52,7 +52,7 @@ export default class TransactionDetails extends Component {
                 <div className="detail">
                   <Badge
                     colorScheme={
-                      this.state.transaction.status === "success"
+                      this.state.transaction.status === "SUCCESS"
                         ? "green"
                         : "purple"
                     }

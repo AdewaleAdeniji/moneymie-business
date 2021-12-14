@@ -18,7 +18,7 @@ const Pay =  (props) => {
                 const pay = await PayBeneficiary(amount,beneficiary_id,data.company_id);
                 toast.dismiss();
                 if(pay.status){
-                    toast.info('Your payment has been sent for processing, please wait while we confirm ');
+                    toast.info('Your payment has been sent, Your BD rep will reach out to you for next steps.');
                     props.onClose();   
                 }
                 else {

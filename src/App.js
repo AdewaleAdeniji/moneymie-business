@@ -54,7 +54,7 @@ function App(props) {
           <Route path='/reset-password' component={ResetPassword} />
           <Route path='/verify-email/:token' component={VerifyEmail} />
           <Route path='/logout' component={Logout}/>
-          <ProtectedRoute path="/user/dashboard" component={Beneficiaries}/>
+          <ProtectedRoute path="/user/dashboard" component={Dashboard}/>
           <Route path="/user/transactions" component={Transactions}/>
           <ProtectedRoute path="/user/beneficiaries" component={Beneficiaries}/>
           <ProtectedRoute path="/user/beneficiary/:id" component={Beneficiary}/>
