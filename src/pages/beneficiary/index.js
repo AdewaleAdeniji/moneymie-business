@@ -66,7 +66,7 @@ const Beneficiaries = (props) => {
                     <div className="trx">{beneficiary.contact_name}</div>
                     <div className="trx">{beneficiary.contact_name}</div>
                     <div className="trx">{beneficiary.phone_number}</div>
-                    <div className="trx">
+                    <div className="trx action">
                       Pay Beneficiary
                       <Menu>
                         <MenuButton className="btn-more">

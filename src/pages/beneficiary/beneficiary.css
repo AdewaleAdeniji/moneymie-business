@@ -134,7 +134,7 @@ table.ben-list {
     background: #F2F0FA;
 }
 .beneficiary-list .trx {
-    width: 200px;
+    width: 120px;
     margin-left: 20px;
 }
 .type {
@@ -280,4 +280,16 @@ h4.ben-name {
 
 /* Money Purple/Purple 600 */
     color: #3A3391;
+}
+.btn-more {
+    margin-left: 12px;
+}
+.trx.action {
+    color: #3A3391;
+    font-family: DM Sans;
+font-style: normal;
+font-weight: normal;
+font-size: 12px;
+line-height: 16px;
+text-align: left;
 }
