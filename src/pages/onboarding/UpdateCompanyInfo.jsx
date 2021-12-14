@@ -1,4 +1,5 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { useQuery } from 'react-query';
 import { Progress, CircularProgress } from '@chakra-ui/react'
 import axios from 'axios';
 import { useSelector } from 'react-redux';
@@ -8,7 +9,7 @@ import { BreadCrumbs } from '../../components/breadcrumbs/breadcrumbs';
 import { InfoBox } from '../../components/InfoArea/Info';
 import { LargeButton } from '../../components/buttons/buttons';
 import { FormArea, FormField } from '../../components/Form/form';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import config from '../../config'
 import FormControl from '../../components/Form/FormControl';
 import { validateUpdateCompanyInfo } from '../../validations/onboarding/updateCompanyInfo';
@@ -16,12 +17,7 @@ import { showToast } from '../../utils/toast';
 import { request } from '../../utils/axios';
 
 
-const initialValues = {
-    reg_no: "",
-    country_of_operations: "",
-    company_address: "",
-    ein: "",
-}
+
 
 
 export const UpdateCompanyInfo = (props) => {
@@ -31,8 +27,36 @@ export const UpdateCompanyInfo = (props) => {
     const [isUploading, setIsUploading] = useState(false)
 
     const history = useHistory();
+    const { state } = useLocation()
+
+
+    const navigateAfterTo = state?.navigateAfterTo;
+
 
     const user = useSelector(state => state.user.user)
+
+
+    const { isLoading, data, isError, error, isFetching, refetch } = useQuery('company-info', () => request({ url: `/user/company/${user.company.id}` }), {
+        select: (data) => {
+            return data.data.data;
+        }
+    })
+
+
+
+    const initialValues = {
+        reg_no: data?.reg_number ?? "",
+        country_of_operations: data?.country_of_operations ?? "",
+        company_address: data?.address ?? "",
+        ein: data?.ein ?? "",
+    }
+
+
+    useEffect(() => {
+        if (data?.registration_certificate_url) {
+            setImageUrl(data.registration_certificate_url)
+        }
+    }, [data]);
 
     const handleUpdateCompanyInfo = (values, onSubmitProps) => {
         if (!imageUrl) {
@@ -45,7 +69,14 @@ export const UpdateCompanyInfo = (props) => {
             .then(res => {
 
                 onSubmitProps.setSubmitting(false)
-                history.push('/owner-info')
+
+                if (navigateAfterTo) {
+                    history.push(navigateAfterTo)
+                }
+                else {
+                    history.push('/owner-info')
+                }
+
             })
             .catch(err => {
                 onSubmitProps.setSubmitting(false)
@@ -86,9 +117,8 @@ export const UpdateCompanyInfo = (props) => {
     }
 
     const fileName = (url) => {
-        const file = url.split('/')
-        const lastElement = file[file.length - 1]
-        return lastElement
+        const file = url.split('.')
+        return file[file.length - 1]
     }
     return (
         <AppContainer>
@@ -108,6 +138,7 @@ export const UpdateCompanyInfo = (props) => {
                     initialValues={initialValues}
                     validationSchema={validateUpdateCompanyInfo}
                     onSubmit={handleUpdateCompanyInfo}
+                    enableReinitialize={true}
                 >
                     {(formik) => (
                         <Form>
@@ -158,7 +189,7 @@ export const UpdateCompanyInfo = (props) => {
                                                 <>
                                                     <i className="fa fa-camera"></i>
                                                     <div className="file-desc">
-                                                        Upload Document of Incorporation
+                                                        {!imageUrl && 'Upload Document of Incorporation'}
                                                     </div>
 
                                                 </>
@@ -166,7 +197,7 @@ export const UpdateCompanyInfo = (props) => {
 
                                             {imageUrl && !isUploading &&
                                                 <div className="file-desc">
-                                                    {fileName(imageUrl)}
+                                                    {`image.${fileName(imageUrl)}`}
                                                 </div>
                                             }
                                         </div>

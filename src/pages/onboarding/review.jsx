@@ -2,14 +2,13 @@ import React, { useState } from 'react';
 import { useQuery } from 'react-query';
 import { AppContainer } from '../../components/container';
 import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import { CircularProgress } from '@chakra-ui/react'
 import { BreadCrumbs } from '../../components/breadcrumbs/breadcrumbs';
 import { InfoBox } from '../../components/InfoArea/Info';
 import { LargeButton } from '../../components/buttons/buttons';
 import { FormArea } from '../../components/Form/form';
 import { showToast } from '../../utils/toast';
-import config from '../../config'
 import { request } from '../../utils/axios';
 
 export const ReviewInfo = (props) => {
@@ -25,9 +24,14 @@ export const ReviewInfo = (props) => {
         }
     })
 
-    const { data: contact } = useQuery('key-contact', () => request({ url: `/user/company/keycontact/${user.company.id}` }))
 
-    console.log(contact)
+    const { data: company } = useQuery('company-info', () => request({ url: `/user/company/${user.company.id}` }), {
+        select: (data) => {
+            return data.data.data;
+        }
+    })
+
+    const { data: contact } = useQuery('key-contact', () => request({ url: `/user/company/keycontact/${user.company.id}` }))
 
     const handleSubmit = () => {
         const body = { user_id: user.id, company_id: user.company.id }
@@ -44,6 +48,7 @@ export const ReviewInfo = (props) => {
     }
 
     const fileName = (url) => {
+        if (!url) return ""
         const file = url.split('.')
         return file[file.length - 1]
     }
@@ -95,7 +100,7 @@ export const ReviewInfo = (props) => {
                                 NAME
                             </div>
                             <div className="owner-sub">
-                                {user.company.registrant_name}
+                                {company?.registrant_name}
                             </div>
                         </div>
                         <div className="owner">
@@ -103,7 +108,7 @@ export const ReviewInfo = (props) => {
                                 Phone Number
                             </div>
                             <div className="owner-sub">
-                                {user.company.phone_number}
+                                {company?.phone_number}
                             </div>
                         </div>
                     </div>
@@ -114,7 +119,7 @@ export const ReviewInfo = (props) => {
                                 ADDRESS
                             </div>
                             <div className="owner-sub">
-                                {user.company.address}
+                                {company?.address}
                             </div>
                         </div>
                         <div className="owner means">
@@ -123,7 +128,7 @@ export const ReviewInfo = (props) => {
                             </div>
                             <div className="owner-sub">
                                 <div className="owner-image">
-                                    {`image.${fileName(user.company.registration_certificate_url)}`}
+                                    {`image.${fileName(company?.registration_certificate_url)}`}
                                 </div>
                                 <button className="btn btn-view">
                                     View
@@ -137,7 +142,7 @@ export const ReviewInfo = (props) => {
                                 COMPANY NAME
                             </div>
                             <div className="owner-sub">
-                                {user.company.registrant_name}
+                                {company?.name}
                             </div>
                         </div>
                         <div className="owner">
@@ -145,7 +150,7 @@ export const ReviewInfo = (props) => {
                                 LINE OF BUSINESS
                             </div>
                             <div className="owner-sub">
-                                {user.company.line_of_business}
+                                {company?.line_of_business}
                             </div>
                         </div>
                     </div>
@@ -155,7 +160,7 @@ export const ReviewInfo = (props) => {
                                 COMPANY WEBSITE
                             </div>
                             <div className="owner-sub">
-                                {user.company.website}
+                                {company?.website}
                             </div>
                         </div>
                         <div className="owner">
@@ -163,7 +168,7 @@ export const ReviewInfo = (props) => {
                                 COMPANY REG NO
                             </div>
                             <div className="owner-sub">
-                                {user.company.reg_number}
+                                {company?.reg_number}
                             </div>
                         </div>
                     </div>
@@ -173,7 +178,7 @@ export const ReviewInfo = (props) => {
                                 COUNTRY OF RESIDENCE
                             </div>
                             <div className="owner-sub">
-                                {user.company.country_of_operations}
+                                {company?.country_of_operations}
                             </div>
                         </div>
                         <div className="owner">
@@ -181,18 +186,22 @@ export const ReviewInfo = (props) => {
                                 EMPLOYER ID NUMBER
                             </div>
                             <div className="owner-sub">
-                                {user.company.ein}
+                                {company?.ein}
                             </div>
                         </div>
                     </div>
-                    <br />
-                    <br />
                     <div style={{ marginTop: 32 }}>
-                        <a href="#">Edit this Information
+
+                        <Link to={{
+                            pathname: "update-company-info",
+                            state: {
+                                navigateAfterTo: '/review'
+                            }
+                        }}>Edit this Information
                             <button className="i-cancel">
                                 <i className="fa fa-angle-right"></i>
                             </button>
-                        </a>
+                        </Link>
                     </div>
 
                 </div>
