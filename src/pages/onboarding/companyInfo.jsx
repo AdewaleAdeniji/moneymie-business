@@ -50,13 +50,11 @@ export const CompanyInfo = (props) => {
     return (
         <AppContainer>
             <BreadCrumbs page={1} />
-            <BreadCrumb label="Company Info"/>
+            <BreadCrumb label="Company Info" />
             <FormArea show={true} position='align-left' title='Company Information' showBackButton={true}>
                 <InfoBox show={true} align='align-left'>
                     Please fill in your company’s information so we can know about your business?
                 </InfoBox>
-
-
                 <Formik
                     initialValues={initialValues}
                     validationSchema={validateAddCompanyInfo}

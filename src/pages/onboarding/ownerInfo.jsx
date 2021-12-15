@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useQuery } from 'react-query';
 import { Progress, CircularProgress } from '@chakra-ui/react'
 import axios from 'axios';
@@ -43,9 +43,16 @@ export const OwnerInfo = (props) => {
         }
     })
 
+
+    useEffect(() => {
+        if (data?.length) {
+            setEditing(false)
+        }
+    }, [data]);
+
     const [editing, setEditing] = useState(!data || data.length === 0);
 
-    const handleAddOwner = (values, onSubmitProps) => {
+    const handleAddOwner = async (values, onSubmitProps) => {
 
         if (!imageUrl) {
             showToast("error", "Please upload a means of identification")
@@ -54,11 +61,12 @@ export const OwnerInfo = (props) => {
 
         const body = { ...values, means_of_identification: imageUrl, user_id: user.id, company_id: user.company_id }
         try {
-            request({ url: '/user/company/owner/add', method: 'POST', data: body })
+            await request({ url: '/user/company/owner/add', method: 'POST', data: body })
             refetch()
             setImageUrl(null)
             setEditing(false)
             onSubmitProps.setSubmitting(false)
+
         }
         catch (e) {
             showToast("error", e.response.data.message)
@@ -77,6 +85,7 @@ export const OwnerInfo = (props) => {
     }
 
     const uploadImage = async (file) => {
+        console.log(file)
         if (!file) return
         const data = new FormData()
         data.append('image', file)
@@ -178,9 +187,7 @@ export const OwnerInfo = (props) => {
                             </a>
                             <br />
                             <br />
-                            <LargeButtonGrey onClick={() => setEditing(true)}>
-                                Add Another owner
-                            </LargeButtonGrey>
+
                         </div>
                     )
                 })}
@@ -238,7 +245,7 @@ export const OwnerInfo = (props) => {
                                                         <>
                                                             <i className="fa fa-camera"></i>
                                                             <div className="file-desc">
-                                                                Upload Document of Incorporation
+                                                                {!imageUrl && 'Upload Means of Identification'}
                                                             </div>
 
                                                         </>
@@ -252,6 +259,7 @@ export const OwnerInfo = (props) => {
                                                 </div>
                                             </div>
                                         </FormField>
+
                                         <LargeButtonGrey type="submit" disabled={formik.isSubmitting}>
                                             {formik.isSubmitting ? <CircularProgress size={6} isIndeterminate color='green.300' /> : 'Save Owner'}
                                         </LargeButtonGrey>
@@ -264,6 +272,16 @@ export const OwnerInfo = (props) => {
 
                 }
                 <br />
+                {!editing && <>
+                    <LargeButtonGrey onClick={() => setEditing(true)}>
+                        Add Another owner
+                    </LargeButtonGrey>
+                    <br />
+                    <br />
+                </>
+                }
+
+
                 <LargeButton onClick={handleContinue}>
                     Continue
                 </LargeButton>
@@ -272,7 +290,9 @@ export const OwnerInfo = (props) => {
                     ref={fileInputRef}
                     className="hidden"
                     accept="image/*"
-                    onChange={(e) => uploadImage(e.target?.files?.[0])}
+                    onChange={(e) => {
+                        uploadImage(e.target?.files?.[0])
+                    }}
                 />
 
             </FormArea>
