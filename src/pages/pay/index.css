@@ -16,7 +16,7 @@
     background: #fff;
     padding: 32px;
     width: 537px;
-    height: 444px;
+   
 
 /* Money White */
     background: #FFFFFF;
@@ -46,8 +46,8 @@ color: #150F2E;
     float: right;
     cursor: pointer;
 }
-.pay-content button {
-    margin-top: 40px;
+.pay-content button span {
+    margin-left: 10px;
 }
 .ben_name {
     background: #F9F8FF !important;

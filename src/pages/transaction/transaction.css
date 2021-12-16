@@ -115,3 +115,20 @@ h6.transaction-desc {
     background: #FFEDED;
     color: #F12A2C;
 }
+
+.trx-status {
+    padding: 5px 10px;
+    border-radius: 25px;
+    color: white;
+}
+
+
+.pending {
+    background-color: orange;
+}
+.completed {
+    background-color: green;
+}
+.failed {
+    background-color: #ea1b2a;
+}

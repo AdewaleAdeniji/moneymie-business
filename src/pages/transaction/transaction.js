@@ -29,7 +29,7 @@ export const Transaction = ({
           <div className="transaction-date">{transactionDate}</div>
         </div>
       </div>
-      <div className="transaction-amount">${amount}<br/><Badge colorScheme={status=='SUCCESS'?'green':'purple'}>{status}</Badge></div>
+      <div className="transaction-amount">${amount}<br /><Badge colorScheme={status === 'SUCCESS' ? 'green' : 'purple'}>{status}</Badge></div>
     </div>
   );
 };

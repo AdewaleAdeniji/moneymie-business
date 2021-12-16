@@ -14,7 +14,7 @@ import { validateAddOwner } from '../../validations/onboarding/addOwnerInfo';
 import config from '../../config'
 import { showToast } from '../../utils/toast';
 import { useSelector } from 'react-redux';
-import { fetcher, request } from '../../utils/axios';
+import { request } from '../../utils/axios';
 
 
 const initialValues = {
@@ -31,9 +31,6 @@ export const OwnerInfo = (props) => {
     const [progress, setProgress] = useState(0);
     const [imageUrl, setImageUrl] = useState(null);
     const [isUploading, setIsUploading] = useState(false)
-
-    const [owners, setOwners] = useState([])
-
 
     const user = useSelector(state => state.user.user)
 
