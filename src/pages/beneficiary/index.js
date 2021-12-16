@@ -55,7 +55,8 @@ const Beneficiaries = (props) => {
   };
   const viewBeneficiary = (beneficiary) => {
     //const ben = e.target.getAttribute("beneficiary");
-    props.history.push("/user/beneficiary/45", { beneficiary: beneficiary });
+    const parsed = JSON.parse(beneficiary)
+    props.history.push(`/user/beneficiary/${parsed.id}`, { beneficiary: beneficiary });
   };
   const Beneficiary = ({ beneficiary }) => {
     return (
