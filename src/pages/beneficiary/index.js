@@ -57,40 +57,40 @@ const Beneficiaries = (props) => {
     //const ben = e.target.getAttribute("beneficiary");
     props.history.push("/user/beneficiary/45", { beneficiary: beneficiary });
   };
-  const Beneficiary  = ({beneficiary}) => {
+  const Beneficiary = ({ beneficiary }) => {
     return (
       <div className="beneficiary">
-                    <div className="trx type">{beneficiary.payment_type}</div>
-                    <div className="trx">{beneficiary.contact_name}</div>
-                    <div className="trx">{beneficiary.contact_name}</div>
-                    <div className="trx">{beneficiary.contact_name}</div>
-                    <div className="trx">{beneficiary.contact_name}</div>
-                    <div className="trx">{beneficiary.phone_number}</div>
-                    <div className="trx action">
-                      Pay Beneficiary
-                      <Menu>
-                        <MenuButton className="btn-more">
-                          <i className="fa fa-ellipsis-v"></i>
-                        </MenuButton>
-                        <MenuList>
-                          <MenuItem
-                            onClick={() =>
-                              viewBeneficiary(JSON.stringify(beneficiary))
-                            }
-                            beneficiary={JSON.stringify(beneficiary)}
-                          >
-                            <i className="fa fa-eye"></i> &nbsp; View
-                          </MenuItem>
-                          <MenuItem
-                            onClick={() => deleteBeneficiary(beneficiary.id)}
-                          >
-                            <i className="fa fa-trash"></i> &nbsp; Delete
-                          </MenuItem>
-                        </MenuList>
-                      </Menu>
-                      {/* <Link to="/user/beneficiary/45" className="float-center">View</Link> */}
-                    </div>
-                  </div>
+        <div className="trx type">{beneficiary.payment_type}</div>
+        <div className="trx">{beneficiary.contact_name}</div>
+        <div className="trx">{beneficiary.contact_name}</div>
+        <div className="trx">{beneficiary.contact_name}</div>
+        <div className="trx">{beneficiary.contact_name}</div>
+        <div className="trx">{beneficiary.phone_number}</div>
+        <div className="trx action">
+          Pay Beneficiary
+          <Menu>
+            <MenuButton className="btn-more">
+              <i className="fa fa-ellipsis-v"></i>
+            </MenuButton>
+            <MenuList>
+              <MenuItem
+                onClick={() =>
+                  viewBeneficiary(JSON.stringify(beneficiary))
+                }
+                beneficiary={JSON.stringify(beneficiary)}
+              >
+                <i className="fa fa-eye"></i> &nbsp; View
+              </MenuItem>
+              <MenuItem
+                onClick={() => deleteBeneficiary(beneficiary.id)}
+              >
+                <i className="fa fa-trash"></i> &nbsp; Delete
+              </MenuItem>
+            </MenuList>
+          </Menu>
+          {/* <Link to="/user/beneficiary/45" className="float-center">View</Link> */}
+        </div>
+      </div>
     )
   }
   const getUser = async () => {
@@ -110,11 +110,11 @@ const Beneficiaries = (props) => {
       setShowLoader(false);
     }
   };
-  
+
   const addBen = () => {
     props.history.push("/beneficiary/create");
   };
-  
+
   return (
     <Container page="beneficiaries">
       <Loader show={showloader} text={loaderText} />
@@ -166,8 +166,8 @@ const Beneficiaries = (props) => {
             {beneficiarieslist.map((beneficiary) => {
               return (
                 <>
-                <Beneficiary beneficiary={beneficiary}/>
-                {/* <div className="beneficiary">
+                  <Beneficiary key={beneficiary.id} beneficiary={beneficiary} />
+                  {/* <div className="beneficiary">
                   <div className="trx type">{beneficiary.payment_type}</div>
                   <div className="trx">{beneficiary.contact_name}</div>
                   <div className="trx">{beneficiary.contact_name}</div>

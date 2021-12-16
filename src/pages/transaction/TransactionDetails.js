@@ -14,7 +14,7 @@ export default class TransactionDetails extends Component {
       data: {},
       loaderText: "",
       showloader: false,
-      transaction: JSON.parse(props.location.state.transaction),
+      transaction: (props.location.state.transaction),
       showPay: false,
     };
     this.goBack = this.goBack.bind(this);
@@ -25,11 +25,14 @@ export default class TransactionDetails extends Component {
   goBack() {
     this.props.history.goBack();
   }
+
   viewBeneficiary = (e) => {
     const ben = e.target.getAttribute("beneficiary");
     this.props.history.push("/user/beneficiary/45", { beneficiary: ben });
   };
   render() {
+    console.log(this.props.location.state)
+
     return (
       <Container page="transaction">
         <Loader show={this.state.showloader} text={this.state.loaderText} />

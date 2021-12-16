@@ -4,7 +4,7 @@ import { Container } from "../../components/container";
 import "../beneficiary/beneficiary.css";
 import { GetLoggedInUser } from "../../utils/user";
 
-const AllTransactions  = (props) => {
+const AllTransactions = (props) => {
   const [showloader, setShowLoader] = useState(false);
   const [loaderText, setLoaderText] = useState("");
   const [user, setUser] = useState(GetLoggedInUser());
@@ -15,7 +15,7 @@ const AllTransactions  = (props) => {
       getUser();
       setFirstRun(false);
     }
-    document.title = "Beneficiaries";
+    document.title = "Transactions";
   });
   const getUser = async () => {
 
@@ -41,11 +41,11 @@ const AllTransactions  = (props) => {
           </div>
 
           <div className="transactions-body">
-                <div className="beneficiary">
-                  <div className="trx type">Domestic</div>
-                  <div className="trx">Hello</div>
-                  
-                </div>
+            <div className="beneficiary">
+              <div className="trx type">Domestic</div>
+              <div className="trx">Hello</div>
+
+            </div>
           </div>
         </section>
       </div>

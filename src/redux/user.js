@@ -11,9 +11,7 @@ export const getToken = () => {
 //   const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null
 //   return user
 // }
-const getEmail = () => {
-  return localStorage.getItem('email') ? localStorage.getItem('email') : ''
-}
+
 
 const initialState = {
   email: "",

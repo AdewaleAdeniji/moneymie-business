@@ -54,14 +54,14 @@ function App(props) {
           <Route path='/email-code' component={EmailOTP} />
           <Route path='/reset-password' component={ResetPassword} />
           <Route path='/verify-email/:token' component={VerifyEmail} />
-          <Route path='/logout' component={Logout}/>
-          <ProtectedRoute path="/user/dashboard" component={Dashboard}/>
-          <Route path="/user/transactions" component={Transactions}/>
-          <ProtectedRoute path="/user/beneficiaries" component={Beneficiaries}/>
-          <ProtectedRoute path="/user/beneficiary/:id" component={Beneficiary}/>
-          <ProtectedRoute path="/beneficiary/create" component={AddBeneficiary}/>
-          <ProtectedRoute path="/transactions" component={AllTransactions}/>
-          <ProtectedRoute path="/transaction/details" component={TransactionDetails}/>
+          <Route path='/logout' component={Logout} />
+          <ProtectedRoute path="/user/dashboard" component={Dashboard} />
+          <Route path="/user/transactions" component={Transactions} />
+          <ProtectedRoute path="/user/beneficiaries" component={Beneficiaries} />
+          <ProtectedRoute path="/user/beneficiary/:id" component={Beneficiary} />
+          <ProtectedRoute path="/beneficiary/create" component={AddBeneficiary} />
+          <ProtectedRoute path="/transactions" component={AllTransactions} />
+          <ProtectedRoute path="/transaction/details" component={TransactionDetails} />
           <Route path='/update-company-info' component={UpdateCompanyInfo} />
           <Route path='/update-key-contact' component={UpdateKeyContact} />
         </Router>
