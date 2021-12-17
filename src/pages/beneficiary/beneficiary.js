@@ -149,7 +149,6 @@ export default class Beneficiary extends Component {
                             <p>{beneficiary.address}</p>
                         </div>
                     </div>
-                    
                 </div>
                    
             </div>
@@ -167,6 +166,7 @@ export default class Beneficiary extends Component {
                                 <h5>RECEIVING BANK ADDRESS</h5>
                                 <p>{beneficiary.address}</p>
                             </div>
+
                         </div>
                         <div className="details">
                             <div className="detail">
@@ -177,6 +177,7 @@ export default class Beneficiary extends Component {
                                 <h5>Account Number</h5>
                                 <p>{beneficiary.account_number}</p>
                             </div>
+
                         </div>
                         <div className="details">
                             <div className="detail">
@@ -188,10 +189,9 @@ export default class Beneficiary extends Component {
                                 <p>{beneficiary.further_credit_address}</p>
                             </div>
                         </div>
-                    </div>    
+                    </div>
                 </div>
-        </div>
-       </Container>
-    );
-  }
+            </Container>
+        );
+    }
 }

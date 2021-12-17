@@ -35,6 +35,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import AllTransactions from './pages/transaction/AllTransactions';
 import 'react-toastify/dist/ReactToastify.css';
 import TransactionDetails from './pages/transaction/TransactionDetails';
+import EditBeneficiary from './pages/beneficiary/EditBeneficiary';
 function App(props) {
   //console.log(data);
 
@@ -59,6 +60,7 @@ function App(props) {
           <Route path="/user/transactions" component={Transactions} />
           <ProtectedRoute path="/user/beneficiaries" component={Beneficiaries} />
           <ProtectedRoute path="/user/beneficiary/:id" component={Beneficiary} />
+          <ProtectedRoute path="/beneficiary/edit/:id" component={EditBeneficiary} />
           <ProtectedRoute path="/beneficiary/create" component={AddBeneficiary} />
           <ProtectedRoute path="/transactions" component={AllTransactions} />
           <ProtectedRoute path="/transaction/details" component={TransactionDetails} />

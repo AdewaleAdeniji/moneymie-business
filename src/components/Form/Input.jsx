@@ -27,13 +27,8 @@ const Input = (props) => {
                                 placeholder={placeholder}
                                 {...rest}
                             />
-
                         </div>
-                        {isInvalid && <Alert status='error' height='10px' p={4} rounded="md" mt={4}>
-                            <AlertIcon />
-                            {error}
-                        </Alert>
-                        }
+                        {isInvalid && <div style={{ color: '#ea1b2a', margin: 5, fontSize: 14 }}>{error}</div>}
                     </div>
                 )
             }}

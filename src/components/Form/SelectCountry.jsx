@@ -7,8 +7,8 @@ const SelectCountry = (props) => {
         order: 'asc'
     });
     return (
-        <select onChange={props.onChange} className="input-field">
-            {countrylist.map((country,index)=>{
+        <select onChange={props.onChange} value={props.value ?? ""} className="input-field">
+            {countrylist.map((country, index) => {
                 return (
                     <option key={index} value={country.name}>{country.name}</option>
                 )
