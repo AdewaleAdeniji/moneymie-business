@@ -303,3 +303,42 @@ font-size: 12px;
 line-height: 16px;
 text-align: left;
 }
+.no-ben {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 358px;
+}
+.add-ben:disabled {
+    background: #A194DB;
+    cursor: not-allowed;
+}
+.no-ben img {
+    margin: 0 auto;
+    width: 64px;
+    height: 64px;
+}
+.no-ben section {
+    display: block;
+    text-align: center;
+    align-items: center;
+}
+
+.no-ben p {
+    margin: 0 auto;
+    width: 246px;
+    height: 36px;
+    font-family: DM Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 18px;
+/* or 129% */
+    text-align: center;
+
+/* Money Grey/Grey 600 */
+    color: #6B6F7D;
+    margin-top: 16px;
+    margin-bottom: 24px;
+}

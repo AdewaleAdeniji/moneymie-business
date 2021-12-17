@@ -22,10 +22,12 @@ export default class Beneficiary extends Component {
     this.goBack = this.goBack.bind(this);
     this.togglePay = this.togglePay.bind(this);
     this.deleteBeneficiary  =  this.deleteBeneficiary.bind(this);
+    this.editBeneficiary= this.editBeneficiary.bind(this);
   }
   componentDidMount() {
     if(this.props?.location?.state?.beneficiary){
         this.setState({beneficiary:JSON.parse(this.props?.location?.state?.beneficiary)});
+        console.log(this.props?.location?.state?.beneficiary);
     }
     else {
         //maybe make an api call to get the beneficiary
@@ -74,6 +76,9 @@ export default class Beneficiary extends Component {
         }
       })
   }
+  editBeneficiary(){
+    this.props.history.push('/beneficiary/edit/'+this.state.beneficiary.id);
+  }
   render() {
     const {beneficiary} = this.state;
     return (
@@ -90,7 +95,7 @@ export default class Beneficiary extends Component {
                 <button onClick={this.deleteBeneficiary}>
                     Delete
                 </button>
-                <button>
+                <button onClick={this.editBeneficiary}>
                     Edit
                 </button>
                 <button className="pay" onClick={this.togglePay}>
@@ -109,7 +114,7 @@ export default class Beneficiary extends Component {
                     <div className="details">
                         <div className="detail">
                             <h5>Type</h5>
-                            <p>Domestic Type</p>
+                            <p>{beneficiary.payment_type}</p>
                         </div>
                         <div className="detail">
                             <h5>NAME</h5>
@@ -120,10 +125,6 @@ export default class Beneficiary extends Component {
                         <div className="detail">
                             <h5>Phone Number</h5>
                             <p>{beneficiary.phone_number}</p>
-                        </div>
-                        <div className="detail">
-                            <h5>Beneficiary Contact name</h5>
-                            <p>{beneficiary.contact_name}</p>
                         </div>
                     </div>
                     
@@ -168,6 +169,7 @@ export default class Beneficiary extends Component {
                             </div>
 
                         </div>
+
                         <div className="details">
                             <div className="detail">
                                 <h5>Swift Code</h5>
@@ -176,6 +178,17 @@ export default class Beneficiary extends Component {
                             <div className="detail">
                                 <h5>Account Number</h5>
                                 <p>{beneficiary.account_number}</p>
+                            </div>
+
+                        </div>
+                        <div className="details">
+                            <div className="detail">
+                                <h5>ROUTING NUMBER</h5>
+                                <p>{beneficiary.routing_number||'N/A'}</p>
+                            </div>
+                            <div className="detail">
+                                <h5>IBAN NUMBER</h5>
+                                <p>{beneficiary.iban||'N/A'}</p>
                             </div>
 
                         </div>
@@ -191,6 +204,7 @@ export default class Beneficiary extends Component {
                         </div>
                     </div>
                 </div>
+            </div>
             </Container>
         );
     }

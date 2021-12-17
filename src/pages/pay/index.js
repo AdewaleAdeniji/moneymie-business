@@ -8,7 +8,7 @@ import './index.css';
 import config from '../../config'
 import { GetLoggedInUser } from "../../utils/user";
 import { PayBeneficiary } from './pay';
-
+import { Zoom } from 'react-reveal';
 const Pay = (props) => {
     const fileInputRef = useRef()
     const [amount, setAmount] = useState(0);
@@ -52,7 +52,6 @@ const Pay = (props) => {
                 }
             }
             catch (e) {
-                console.log(e)
                 toast.dismiss();
                 if (e?.response?.status === 401) {
                     props.history.push("/login");
@@ -102,10 +101,15 @@ const Pay = (props) => {
         const file = url.split('.')
         return file[file.length - 1]
     }
-
+    const OverlayClicked = (e) => {
+        if(e.target===e.currentTarget){
+            props.onClose();
+        }
+    }
     return (
         props.show ?
-            <div className="pay-modal">
+        <Zoom>
+            <div className="pay-modal" onClick={OverlayClicked}>
                 <div className="pay-content">
                     {
                         showContinue ?
@@ -218,7 +222,7 @@ const Pay = (props) => {
 
 
                 </div>
-            </div> : <></>
+            </div></Zoom> : <></>
     )
 }
 export default Pay;
