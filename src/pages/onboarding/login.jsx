@@ -50,7 +50,7 @@ export const Login = (props) => {
         return history.push('/update-company-info')
       }
 
-      history.push('/user/dashboard')
+      history.push('/user/beneficiaries')
 
     }
     catch (e) {

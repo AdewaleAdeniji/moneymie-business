@@ -12,8 +12,7 @@ import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { deleteBen } from "./data";
 import { toast } from "react-toastify";
-
-
+import {Fade} from 'react-reveal';
 const Beneficiaries = (props) => {
   const [showloader, setShowLoader] = useState(true);
   const [loaderText, setLoaderText] = useState("");
@@ -53,34 +52,37 @@ const Beneficiaries = (props) => {
     });
   };
   const viewBeneficiary = (beneficiary) => {
-    props.history.push(`/user/beneficiary/${beneficiary.id}`, { beneficiary: JSON.stringify(beneficiary) });
+    props.history.push(`/user/beneficiary/${beneficiary.id}`, {
+      beneficiary: JSON.stringify(beneficiary),
+    });
   };
   const Beneficiary = ({ beneficiary }) => {
     return (
-      <div className="beneficiary">
+      <div
+        className="beneficiary"
+        onClick={(e) =>
+          e.target === e.currentTarget && viewBeneficiary(beneficiary)
+        }
+      >
         <div className="trx type">{beneficiary.payment_type}</div>
         <div className="trx">{beneficiary.contact_name}</div>
-        <div className="trx">{beneficiary.contact_name}</div>
-        <div className="trx">{beneficiary.contact_name}</div>
-        <div className="trx">{beneficiary.contact_name}</div>
-        <div className="trx">{beneficiary.phone_number}</div>
+        <div className="trx">{beneficiary.account_number}</div>
+        <div className="trx">{beneficiary.bank_name}</div>
+        <div className="trx mobile-hide">{beneficiary.bank_country}</div>
+        <div className="trx mobile-hide">{beneficiary.phone_number}</div>
         <div className="trx action">
           <Menu>
-            <MenuButton as={Button}  className="btn-more">
+            <MenuButton as={Button} className="btn-more">
               <i className="fa fa-ellipsis-v"></i>
             </MenuButton>
             <MenuList>
               <MenuItem
-                onClick={() =>
-                  viewBeneficiary(beneficiary)
-                }
+                onClick={() => viewBeneficiary(beneficiary)}
                 beneficiary={JSON.stringify(beneficiary)}
               >
                 <i className="fa fa-eye"></i> &nbsp; View
               </MenuItem>
-              <MenuItem
-                onClick={() => deleteBeneficiary(beneficiary.id)}
-              >
+              <MenuItem onClick={() => deleteBeneficiary(beneficiary.id)}>
                 <i className="fa fa-trash"></i> &nbsp; Delete
               </MenuItem>
             </MenuList>
@@ -88,11 +90,11 @@ const Beneficiaries = (props) => {
           {/* <Link to="/user/beneficiary/45" className="float-center">View</Link> */}
         </div>
       </div>
-    )
-  }
+    );
+  };
   const getUser = async () => {
     const data = typeof user == "string" ? JSON.parse(user) : user;
-    setPending(data.status === "PENDING");
+    setPending(data.company.final_verification_status === "PENDING");
     try {
       const beneficiariesdata = await beneficiaries(data.company_id);
       const { rows } = beneficiariesdata?.data?.data;
@@ -115,10 +117,8 @@ const Beneficiaries = (props) => {
   return (
     <Container page="beneficiaries">
       <Loader show={showloader} text={loaderText} />
-
       {/* <div className="welcome-message">Hi {}</div> */}
-
-      {/* {pending && (
+      {pending && (
         <div className="col-md-12 note">
           <div className="light-toast">
             <div className="img-section">
@@ -138,24 +138,36 @@ const Beneficiaries = (props) => {
             </div>
           </div>
         </div>
-      )} */}
-
-      <div className="col-md-12">
+      )}
+      <div className="col-md-12 bene">
         <div className="col-title">Beneficiaries list</div>
-        <button className="add-ben" onClick={addBen}>
+        <button className="add-ben" onClick={addBen} disabled={pending}>
           Add Beneficiaries
         </button>
       </div>
 
+      {beneficiarieslist.length===0&&<div className="beneficiary-list no-ben">
+        <section>
+          <img
+            src={`${process.env.PUBLIC_URL}/assets/icons/profile.png`}
+            alt="No beneficiary  placeholder"
+          />
+          <p>No beneficiares to display. Try adding 
+          a new beneficiary</p>
+          <button className="add-ben" onClick={addBen} disabled={pending}>
+                    Add Beneficiaries
+        </button>
+        </section>
+      </div>}
       <div className="beneficiary-list">
         <section>
           <div className="transactions-title">
             <div className="trx type">Type</div>
             <div className="trx">Beneficiary Name</div>
             <div className="trx">Account Number</div>
-            <div className="trx">Beneficiary Number</div>
-            <div className="trx">Beneficiary Number</div>
-            <div className="trx">Beneficiary Number</div>
+            <div className="trx">Bank Name</div>
+            <div className="trx mobile-hide">Bank Country</div>
+            <div className="trx mobile-hide">Beneficiary Number</div>
             <div className="trx">Actions</div>
           </div>
 
@@ -170,6 +182,7 @@ const Beneficiaries = (props) => {
           </div>
         </section>
       </div>
+      
     </Container>
   );
 };

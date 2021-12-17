@@ -15,6 +15,9 @@
     display: flex;
     justify-content: center;
 }
+.logoarea img {
+    width: 201px;
+}
 .bread-crumbs {
     display: flex;
     width: 100%;
