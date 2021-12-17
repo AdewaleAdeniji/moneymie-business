@@ -17,6 +17,8 @@ const AddBeneficiary = (props) => {
   const [bank_name, setBankName] = useState('')
   const [phone_number, setPhoneNumber] = useState('');
   const [bank_country, setBankCountry] = useState('');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [user] = useState(GetLoggedInUser());
   const goBack = () => {
     props.history.goBack();
@@ -24,7 +26,6 @@ const AddBeneficiary = (props) => {
   const addBene = async () => {
       toast.loading('Adding Beneficiary');
       try {
-        console.log(bank_country);
       const res =  await addBen({
         "contact_name" : contact_name,
         "address" : address,
@@ -38,7 +39,7 @@ const AddBeneficiary = (props) => {
         "bank_swift" : swiftCode,
         "bank_country" : bank_country,
         "company_id" : user.company_id,
-         "name" : contact_name,
+         "name" : name,
         "email" : user.email
     })
     toast.dismiss();
@@ -80,7 +81,27 @@ const AddBeneficiary = (props) => {
       </div>
       
       <div className="form-fields add-ben">
-        <FormField title="Beneficiary Contact Name">
+        <FormField title="Beneficiary Email Address">
+          <input
+            type="text"
+            className="input-field"
+            placeholder="Beneficiary Email"
+            onChange={(e)=>{setEmail(e.target.value)}}
+            required
+          />
+        </FormField>
+        <FormField title="Beneficiary Name">
+          <input
+            type="text"
+            className="input-field"
+            placeholder="Beneficiary Name"
+            onChange={(e)=>{setName(e.target.value)}}
+            required
+          />
+        </FormField>
+      </div>
+      <div className="form-fields add-ben">
+      <FormField title="Beneficiary Contact Name">
           <input
             type="text"
             className="input-field"
@@ -89,17 +110,6 @@ const AddBeneficiary = (props) => {
             required
           />
         </FormField>
-        <FormField title="Beneficiary Address">
-          <input
-            type="address"
-            className="input-field"
-            placeholder="Payment Type"
-            onChange={(e)=>{setAddress(e.target.value)}}
-            required
-          />
-        </FormField>
-      </div>
-      <div className="form-fields add-ben">
         <FormField title="Beneficiary Contact Number">
           <input
             type="text"
@@ -129,7 +139,7 @@ const AddBeneficiary = (props) => {
             required
           />
         </FormField>
-        <FormField title="Receving Bank Address">
+        <FormField title="Receiving Bank Address">
           <input
             type="text"
             className="input-field"
@@ -175,15 +185,7 @@ const AddBeneficiary = (props) => {
         
       </div>
       <div className="form-fields add-ben">
-        <FormField title="Beneficiary Name">
-          <input
-            type="email"
-            className="input-field"
-            placeholder="Beneficiary Name"
-            onChange={(e)=>{setContactName(e.target.value)}}
-            required
-          />
-        </FormField>
+        
         
       </div>
       <div className="form-fields add-ben">
