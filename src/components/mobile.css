@@ -1,4 +1,4 @@
-@media(max-width:900px) {
+@media(max-width:1000px) {
     .logincontainer {
         margin-left: 10%;
         margin-right: 10%;
@@ -57,5 +57,115 @@
     
     .breadcrumb {
         display: none;
+    }
+    aside.sidebar {
+        display: none !important;
+    }
+    .hidden {
+        display: none;
+    }
+    .app-box {
+        margin-left: 20px !important;
+        padding-top: 50px !important;
+        width: 100vw !important;
+        overflow: hidden;
+    }
+    .beneficiary-list {
+        width: 100vw !important;
+        margin-top: 50px !important;
+        /* display: none; */
+    }
+    .col-md-12 {
+        width: 90vw;
+    }
+    
+    .mobile-nav {
+        width: 100%;
+        display: flex;
+        position: fixed;
+        background: #fff;
+        height: 60px;
+        justify-content: space-between;
+        padding: 20px;
+    }
+    .mobile-nav IMG {
+        cursor: pointer;
+    }
+    .mobile-navbar {
+        position: fixed;
+        background: #fff;
+        width: 300px;
+        height: 100%;
+    }
+    
+    .mobile-head {
+        height: 100px;
+        justify-content: right;
+        display: flex;
+        padding-right: 40px;
+        align-items: center;
+    }
+    button.btn.btn-close {
+        background: #f3d6d6;
+        color: #e51818;
+        height: 30px;
+        width: 30px;
+        font-size: 30px;
+        /* padding: 20px; */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .mobile-nav {
+        width: 100%;
+        display: flex;
+        position: fixed;
+        background: #fff;
+        height: 60px;
+        justify-content: space-between;
+        padding: 20px;
+    }
+    html,body {
+        overflow-x: hidden;
+    }
+    .mobile-navc {
+        position: fixed;
+        top: 0;
+        left: 0;
+        background: rgba(0,0,0,0.8);
+        width: 100%;
+        height: 100%;
+        z-index: 10000;
+    }
+    .col-md-12 {
+        display: block !important;
+    }
+    .bene {
+        display: flex !important;
+    }
+    .ben {
+        width: 100% !important; 
+    }
+    
+    .ben .left-aligned {
+        display: flex;
+    }
+    .form-fields.add-ben {
+        display: block !important;
+    }
+    
+    .left-aligned button {
+        margin-right: 5px !important;
+        margin-top: 30px;
+    }
+    .ben-box {
+        width:85vw !important;
+    }
+    .pay-content {
+        width: 300% !important;
+    }
+    
+    .pay-modal input.input-field {
+        width: 100% !important;
     }
 }
