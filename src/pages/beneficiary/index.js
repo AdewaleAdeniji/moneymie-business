@@ -46,7 +46,6 @@ const Beneficiaries = (props) => {
           toast.success("Beneficiary Deleted Successfully");
           getUser();
         } catch (e) {
-          console.log(e);
           toast.dismiss();
           toast.warning("Failed to delete Beneficiary");
         }
@@ -54,9 +53,7 @@ const Beneficiaries = (props) => {
     });
   };
   const viewBeneficiary = (beneficiary) => {
-    //const ben = e.target.getAttribute("beneficiary");
-    const parsed = JSON.parse(beneficiary)
-    props.history.push(`/user/beneficiary/${parsed.id}`, { beneficiary: beneficiary });
+    props.history.push(`/user/beneficiary/${beneficiary.id}`, { beneficiary: JSON.stringify(beneficiary) });
   };
   const Beneficiary = ({ beneficiary }) => {
     return (
@@ -68,15 +65,14 @@ const Beneficiaries = (props) => {
         <div className="trx">{beneficiary.contact_name}</div>
         <div className="trx">{beneficiary.phone_number}</div>
         <div className="trx action">
-          Pay Beneficiary
           <Menu>
-            <MenuButton className="btn-more">
+            <MenuButton as={Button}  className="btn-more">
               <i className="fa fa-ellipsis-v"></i>
             </MenuButton>
             <MenuList>
               <MenuItem
                 onClick={() =>
-                  viewBeneficiary(JSON.stringify(beneficiary))
+                  viewBeneficiary(beneficiary)
                 }
                 beneficiary={JSON.stringify(beneficiary)}
               >
@@ -156,7 +152,7 @@ const Beneficiaries = (props) => {
           <div className="transactions-title">
             <div className="trx type">Type</div>
             <div className="trx">Beneficiary Name</div>
-            <div className="trx">Beneficiary Number</div>
+            <div className="trx">Account Number</div>
             <div className="trx">Beneficiary Number</div>
             <div className="trx">Beneficiary Number</div>
             <div className="trx">Beneficiary Number</div>
@@ -168,39 +164,6 @@ const Beneficiaries = (props) => {
               return (
                 <>
                   <Beneficiary key={beneficiary.id} beneficiary={beneficiary} />
-                  {/* <div className="beneficiary">
-                  <div className="trx type">{beneficiary.payment_type}</div>
-                  <div className="trx">{beneficiary.contact_name}</div>
-                  <div className="trx">{beneficiary.contact_name}</div>
-                  <div className="trx">{beneficiary.contact_name}</div>
-                  <div className="trx">{beneficiary.contact_name}</div>
-                  <div className="trx">{beneficiary.phone_number}</div>
-                  <div className="trx float-center">
-                    Pay Beneficiary
-                    <Menu>
-                      <MenuButton className="btn-more">
-                        <i className="fa fa-ellipsis-v"></i>
-                      </MenuButton>
-                      <MenuList>
-                        <MenuItem
-                          onClick={() =>
-                            viewBeneficiary(JSON.stringify(beneficiary))
-                          }
-                          beneficiary={JSON.stringify(beneficiary)}
-                        >
-                          <i className="fa fa-eye"></i> &nbsp; View
-                        </MenuItem>
-                        <MenuItem
-                          onClick={() => deleteBeneficiary(beneficiary.id)}
-                        >
-                          <i className="fa fa-trash"></i> &nbsp; Delete
-                        </MenuItem>
-                      </MenuList>
-                    </Menu>
-                    
-                  </div>
-                </div>
-                 */}
                 </>
               );
             })}

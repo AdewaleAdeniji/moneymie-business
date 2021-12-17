@@ -28,7 +28,7 @@ export default class TransactionDetails extends Component {
 
   viewBeneficiary = (e) => {
     const ben = e.target.getAttribute("beneficiary");
-    this.props.history.push("/user/beneficiary/45", { beneficiary: ben });
+    this.props.history.push(`/user/beneficiary/${ben.id}`, { beneficiary: JSON.stringify(ben) });
   };
   render() {
     console.log(this.props.location.state)
@@ -96,11 +96,11 @@ export default class TransactionDetails extends Component {
               </div>
               <div className="details">
                 <a
-                  href=""
+                  href="#"
                   onClick={this.viewBeneficiary}
-                  beneficiary={JSON.stringify(
+                  beneficiary={
                     this.state.transaction.Beneficiary
-                  )}
+                  }
                 >
                   View Beneficiary Full Details <i className='fa fa-angle-right'></i>
                 </a>
